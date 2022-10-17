@@ -8,4 +8,19 @@ O MVP do TatuZap consiste de dois repositórios, o ETLTatuZap, reponsável por c
 
 ## ETLTatuZap
 
-ETLTatuZap
+Os códigos presentes nesse repositório são relativos ao processo de Extração, Transformação e Carregamento (LOAD), também conhecido como *ETL*, toda essa etapa tem como objetivo alimentar o banco de dados a ser utilizado em nosso chatbot (https://github.com/TatuZap/BotTatuZap) para responder queries de usuários.
+
+Dentro do ETLTatuZap, pretendemos utilizar as seguintes tecnologias:
+
+* Python
+
+* Pandas
+
+* Tabula
+
+* MongoDB
+
+* FastAPI
+
+
+
