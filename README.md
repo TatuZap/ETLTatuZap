@@ -13,7 +13,7 @@ Os códigos presentes nesse repositório são relativos ao processo de Extraçã
 Dentro do ETLTatuZap, pretendemos utilizar as seguintes tecnologias:
 
 * Python(3.9)
-* [![Python][Python.org]][Python-url]
+* [![Python][[python.org]]][Python-url]
 * Pandas
 
 * Tabula
