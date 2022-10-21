@@ -25,10 +25,9 @@ Dentro do ETLTatuZap, pretendemos utilizar as seguintes tecnologias:
 ## Getting Started
 Instruções para rodar nosso projeto.
 
-### Prerequisites
+### Pre - requisitos
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+```sh
+# or PyPI
+pip install pandas
+```
