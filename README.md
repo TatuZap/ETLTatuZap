@@ -22,12 +22,18 @@ Dentro do ETLTatuZap, pretendemos utilizar as seguintes tecnologias:
 
 * FastAPI
 
-## Getting Started
-Instruções para rodar nosso projeto.
+## Instruções
+Passo a passo para rodar o projeto.
 
-### Pre - requisitos
-
+### Pré-requisitos
+Instale a biblioteca Pandas para auxiliar na manipulação de dados
 ```sh
-# or PyPI
+# PyPI
 pip install pandas
 ```
+Instale está biblioteca para que seja possível ler e escrever arquivos Excel usando um código fácil
+```sh
+# PyPI
+pip install openpyxl
+```
+
