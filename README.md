@@ -16,8 +16,6 @@ Dentro do ETLTatuZap, pretendemos utilizar as seguintes tecnologias:
 
 * Pandas
 
-* Tabula
-
 * MongoDB
 
 * FastAPI
