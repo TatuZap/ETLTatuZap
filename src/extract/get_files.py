@@ -1,7 +1,10 @@
 import os
+import pandas as pd
 
-path=os.path.realpath('../files')
-folder = os.path.dirname(path)
-files=os.listdir(folder)
+def files():
+    path=os.path.realpath('../files')
+    files_name=os.listdir(path)
+    files = []
+    for file in files_name: files.append(path + '\\' +file)
+    return files
 
-print(files)
