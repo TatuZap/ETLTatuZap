@@ -24,6 +24,12 @@ Dentro do ETLTatuZap, pretendemos utilizar as seguintes tecnologias:
 Passo a passo para rodar o projeto.
 
 ### Pré-requisitos
+
+Clone o repositório do Tatuzap ETL
+```sh
+https://github.com/TatuZap/ETLTatuZap.git
+```
+
 Instale a biblioteca Pandas para auxiliar na manipulação de dados
 ```sh
 # PyPI
