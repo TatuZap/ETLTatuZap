@@ -91,5 +91,9 @@ Linux: source venv/bin/activate
 
 pip install -r requirements.txt
 
+### Executando
+
+python scr/main.py
+
 
 
