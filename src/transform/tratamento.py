@@ -1,0 +1,26 @@
+from .matriculas_pos_ajuste import tratamento_matriculas_pos_ajuste as tratamento_matriculas_pos_ajuste
+from .turmas_ingressantes import tratamento_turmas_ingressantes as tratamento_turmas_ingressantes
+from .ajuste import tratamento_ajuste as tratamento_ajuste
+import json
+
+def list_df_to_json(dfs):
+    list = []
+    for df in dfs:
+        list.append(json.loads(df.to_json(orient="table",index=False))['data'])
+    return list
+
+def tratamento_json(get_all_dataframes):
+    dfs = get_all_dataframes()
+    dfs[0] = tratamento_ajuste(dfs[0])
+    dfs[1] = tratamento_matriculas_pos_ajuste(dfs[1])
+    dfs[3] = tratamento_turmas_ingressantes(dfs[3])
+    return list_df_to_json(dfs)
+
+def tratamento_df(get_all_dataframes):
+    dfs = get_all_dataframes()
+    dfs[0] = tratamento_ajuste(dfs[0])
+    dfs[1] = tratamento_matriculas_pos_ajuste(dfs[1])
+    dfs[3] = tratamento_turmas_ingressantes(dfs[3])
+    return dfs
+
+
