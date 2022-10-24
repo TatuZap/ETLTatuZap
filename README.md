@@ -23,21 +23,36 @@ Dentro do ETLTatuZap, pretendemos utilizar as seguintes tecnologias:
 ## Instruções
 Passo a passo para rodar o projeto.
 
-### Pré-requisitos
 
-Clone o repositório do Tatuzap ETL
+### Pré-requisitos
+- Clone o repositório do Tatuzap ETL
 ```sh
-https://github.com/TatuZap/ETLTatuZap.git
+git clone git@github.com:TatuZap/ETLTatuZap.git
 ```
 
-Instale a biblioteca Pandas para auxiliar na manipulação de dados
+- Instale a biblioteca Pandas para auxiliar na manipulação de dados
 ```sh
 # PyPI
 pip install pandas
 ```
-Instale está biblioteca para que seja possível ler e escrever arquivos Excel usando um código fácil
+
+- Instale esta biblioteca para que seja possível ler e escrever arquivos Excel usando um código fácil
 ```sh
 # PyPI
 pip install openpyxl
 ```
 
+- Instale a biblioteca unidecode
+```sh
+# PyPI
+pip install unidecode
+```
+
+### Execução
+
+- Para testar a primeira query, rode o comando a seguir no diretório raiz do projeto:
+```sh
+python3 src/extract/classes_by_ra_query.py
+```
+
+OBS: Query ainda não implementada, tarefa bloqueada pelo ajuste no tratamento dos dataframes, que está com bugs
