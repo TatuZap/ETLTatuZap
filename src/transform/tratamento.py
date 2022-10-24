@@ -9,6 +9,14 @@ def list_df_to_json(dfs):
         list.append(json.loads(df.to_json(orient="table",index=False))['data'])
     return list
 
+def to_json_file(dfs):
+    i=0
+    for df in dfs:
+        i = i + 1
+        df.to_json(path_or_buf='C:\\Users\\Danilo\\Documents\\UFABC\LABES\\ETLTatuZap\\src\\output\\data'+str(i)+'.json',orient="table",index=False)
+    return list
+
+
 def tratamento_json(get_all_dataframes):
     dfs = get_all_dataframes()
     dfs[0] = tratamento_ajuste(dfs[0])
