@@ -56,3 +56,40 @@ Dentro do ETLTatuZap, pretendemos utilizar as seguintes tecnologias:
 [Bootstrap-url]: https://getbootstrap.com
 [JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
 [JQuery-url]: https://jquery.com 
+
+## Executando localmente
+
+### Instalando python:
+
+Windows: download do [Instalador](https://www.python.org/downloads/)
+
+Linux: sudo apt-get install python3
+
+### Instalando PIP 
+
+Windows: curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+         python get-pip.py
+         
+Linux: sudo apt install python3-pip
+Conferindo a instalação: pip3 --version
+
+### Instalando virtualenv
+
+pip install virtualenv
+
+#### Criando Ambiente Virtual
+
+python3 -m venv venv
+
+#### Ativando ambiente virtual
+
+Windows: No CMD venv\Scripts\Activate 
+
+Linux: source venv/bin/activate
+
+### Instalando Dependencias
+
+pip install -r requirements.txt
+
+
+
