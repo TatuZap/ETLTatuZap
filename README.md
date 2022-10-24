@@ -61,39 +61,39 @@ Dentro do ETLTatuZap, pretendemos utilizar as seguintes tecnologias:
 
 ### Instalando python:
 
-Windows: download do [Instalador](https://www.python.org/downloads/)
+- Windows: download do [Instalador](https://www.python.org/downloads/)
 
-Linux: sudo apt-get install python3
+- Linux: sudo apt-get install python3
 
 ### Instalando PIP 
 
-Windows: curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+- Windows: curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
          python get-pip.py
          
-Linux: sudo apt install python3-pip
+- Linux: sudo apt install python3-pip
 Conferindo a instalação: pip3 --version
 
 ### Instalando virtualenv
 
-pip install virtualenv
+- pip install virtualenv
 
 #### Criando Ambiente Virtual
 
-python3 -m venv venv
+- python3 -m venv venv
 
 #### Ativando ambiente virtual
 
-Windows: No CMD venv\Scripts\Activate 
+- Windows: No CMD venv\Scripts\Activate 
 
-Linux: source venv/bin/activate
+- Linux: source venv/bin/activate
 
 ### Instalando Dependencias
 
-pip install -r requirements.txt
+- pip install -r requirements.txt
 
 ### Executando
 
-python src/main.py
+- python src/main.py
 
 
 
