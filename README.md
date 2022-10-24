@@ -93,7 +93,7 @@ pip install -r requirements.txt
 
 ### Executando
 
-python scr/main.py
+python src/main.py
 
 
 
