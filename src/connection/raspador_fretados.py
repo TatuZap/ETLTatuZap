@@ -6,7 +6,7 @@ import unidecode
 BUS_URL = "https://pu.ufabc.edu.br/horarios-dos-onibus"
 BUS_PAGE = requests.get(BUS_URL).content
 tables_on_page = pd.read_html(BUS_PAGE)
-BUS_NAMES = ["SA-SBC-SS","SBC-TSBC","SA-SBC-SS"]
+BUS_NAMES = ["SA-SBC-SS","SBC-TSBC","SA-SBC-FDS"]
 
 def clean_bus_df(df):
     normalise_df_columns_names = lambda df : (df.set_axis([ unidecode.unidecode(column.lower()) for column in list(df.columns)], axis=1))
