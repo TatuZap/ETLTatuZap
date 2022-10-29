@@ -1,6 +1,5 @@
 from dataclasses import dataclass
-from urllib import response
-from database import get_db, DBconfig
+from database import get_db
 import json
 from raspador_fretados import tables_on_page, clean_bus_df
 
@@ -36,12 +35,14 @@ class FretadoModel:
         # deleta o conteúdo atual do banco
         self.delete_all()
 
-        # preparando as tabelas para inseri-las elemento a elemento no banco
-        fretados_json = [ json.loads(table.to_json(orient='records')) for table in clean_bus_df(tables_on_page) ]
+        # get dataframe
+        parsed_dataframe = clean_bus_df(tables_on_page)
 
-        # inserção multipla
-        for table_json in fretados_json:
-            self.insert_items(table_json)
+        # preparando as tabelas para inseri-las elemento a elemento no banco
+        fretados_json = json.loads(parsed_dataframe.to_json(orient='records'))
+
+        # inserção
+        self.insert_items(fretados_json)
 
     def __get_collection(self):
         return get_db.get_collection("fretados")
