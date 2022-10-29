@@ -16,11 +16,13 @@ class FretadoModel:
 
         return self.__get_collection().find()
 
-    def next_bus_sa_sbc(self, horario):
-        return self.__get_collection().find( { "santo andre partida" : { "$exists" : True } , "sao bernardo chegada" : { "$exists" : True } })
+    # origem, destino => "SA" ou "SBC"
+    # horario         => string
+    def next_bus(self, origem, destino, horario): # TODO
+        return self.__get_collection().find({ "origem": origem, "destino": destino }) # TODO hour comparison
 
     def find_by_linha(self, linha):
-        return self.__get_collection().findOne({ "linha": linha })
+        return self.__get_collection().find_one({ "linha": linha })
 
     def insert_item(self, item):
         return self.__get_collection().insert_one(item)
