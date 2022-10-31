@@ -10,7 +10,7 @@ import pandas as pd
 #pos ajuste
 file = 'C:\\Users\\Danilo\\Documents\\UFABC\\LABES\\ETLTatuZap\\src\\output\\data2.json'
 pos_ajuste_file = open(file)
-pos_ajuste_json = json.load(pos_ajuste_file)['data']
+pos_ajuste_json = json.load(pos_ajuste_file)
 pos_ajuste_str = json.dumps(pos_ajuste_json)
 
 #ajuste
