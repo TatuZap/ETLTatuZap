@@ -1,16 +1,23 @@
-from fretados_model import FretadoModel
+import fretados_model
+import catalogo_model
 
-# instanciando o model do Fretado
-fretados_model = FretadoModel()
-
-# resetando o banco (deletando tudo e depois raspando e inserindo os dados)
+# Como popular o banco de dados
 fretados_model.populate_database()
 
-# #### listando tudo que foi recuperado do banco ####
-# for item in fretados_model.list_all():
-#     print(item)
+catalogo_model.populate_database()
 
-# #### listando os que saem de SA e vão para SBC ####
+# Listando tudo que foi recuperado
+print("Listando todos os Fretados")
+for item in fretados_model.list_all():
+    print(item)
+
+
+print("Listando todos as turmas do catálogo")
+for item in catalogo_model.list_all():
+    print(item)
+
+
+# Listando os que saem de SA e vão para SBC
 # for item in fretados_model.next_bus("SA", "SBC", ""):
 #     print(item)
 

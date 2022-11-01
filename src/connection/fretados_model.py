@@ -1,50 +1,108 @@
-from dataclasses import dataclass
-from database import get_db
 import json
+from database import DBconfig, get_db, DBCollections
 from raspador_fretados import tables_on_page, clean_bus_df
 
-@dataclass
-class FretadoModel:
+def list_all():
     """
-        Classe que se connecta e performa requisições na coleção: Fretados.
+        Função que retorna todos os Fretados da coleção de Fretados
     """
+    try:
+        response = _get_collection().find()
+        if response.explain()["executionStats"]["executionSuccess"]: # Procura nos Status se a operação deu Certo
+            return response
+    except Exception as e:
+        raise e 
 
-    def list_all(self):
-        """
-            retorna todos os fretados
-        """
+def next_bus(origem, destino, horario): # TODO
+    """
+        Função que retorna os próximos Fretados baseada na origem, destino e no horário.
+    """
+    return _get_collection().find({ "origem": origem, "destino": destino }) # TODO hour comparison
 
-        return self.__get_collection().find()
+def find_by_linha(linha):
+    """
+        Função que retorna todos os Fretados com base na linha
+    """
+    try:
+        response = _get_collection().find_one({ "linha": linha })
+        if response:
+            return response
+    except Exception as e:
+        raise e
 
-    # origem, destino => "SA" ou "SBC"
-    # horario         => string
-    def next_bus(self, origem, destino, horario): # TODO
-        return self.__get_collection().find({ "origem": origem, "destino": destino }) # TODO hour comparison
+def insert_item(item):
+    """
+        Função que insere um Fretado na Coleção de Fretados
+    """
+    try:
+        response = _get_collection().insert_one(item)
+        if response:
+            return response
+    except Exception as e:
+        raise e
 
-    def find_by_linha(self, linha):
-        return self.__get_collection().find_one({ "linha": linha })
+def insert_items(items):
+    """
+        Função que insere uma lista de Fretados na Coleção de Fretados
+    """
+    try:
+        response = _get_collection().insert_many(items)
+        if response:
+            return response
+        raise Exception("Erro ao inserir Fretados")
+    except Exception as e:
+        raise e
 
-    def insert_item(self, item):
-        return self.__get_collection().insert_one(item)
+def delete_all():
+    """
+        Função que remove todas as entradas da coleção de fretados
+    """
+    try:
+        response = _get_collection().delete_many({})
+        if response:
+            return response
+    except Exception as e:
+        raise e
 
-    def insert_items(self, items):
-        return self.__get_collection().insert_many(items)
+def populate_database():
+    # deleta o conteúdo atual do banco
+    delete_all()
 
-    def delete_all(self):
-        return self.__get_collection().drop()
+    # get dataframe
+    parsed_dataframe = clean_bus_df(tables_on_page)
 
-    def populate_database(self):
-        # deleta o conteúdo atual do banco
-        self.delete_all()
+    # preparando as tabelas para inseri-las elemento a elemento no banco
+    fretados_json = json.loads(parsed_dataframe.to_json(orient='records'))
 
-        # get dataframe
-        parsed_dataframe = clean_bus_df(tables_on_page)
+    # inserção
+    insert_items(fretados_json)
 
-        # preparando as tabelas para inseri-las elemento a elemento no banco
-        fretados_json = json.loads(parsed_dataframe.to_json(orient='records'))
-
-        # inserção
-        self.insert_items(fretados_json)
-
-    def __get_collection(self):
-        return get_db.get_collection("fretados")
+# função privada dentro desse módulo
+def _get_collection():
+    """
+        Função que retorna a coleção de Fretados
+    """
+    try:
+        return get_db.get_collection(DBCollections.TURMAS)
+    except Exception as e:
+        raise e
+class FretadosModel:
+    """
+    Classe que Modela o Objeto de negócio Fretado
+    - dias:            Pode ser de dois valores 'SEMANA' e 'SABADO'
+    - origem:          Pode ser de dois valores 'SA' e 'SBC'
+    - destino:         Pode ser de dois valores 'SA' e 'SBC'
+    - hora_partida:    Pode ser do valor de um horário, tipo '8:25' ou 'N/A' caso não tenha valor
+    - hora_chegada:    Pode ser do valor de um horário, tipo '8:25' ou 'N/A' caso não tenha valor
+    - linha:           O número da linha de onibus, pode ter valores de 1 a 6
+    """
+    def __init__(self, dias, origem, destino, hora_partida, hora_chegada, linha) -> None:
+        self.dias = dias 
+        self.origem = origem 
+        self.destino = destino 
+        self.hora_partida = hora_partida
+        self.hora_chegada = hora_chegada
+        self.linha = linha
+    
+    def __str__(self) -> str:
+        return "Fretado da Linha: {} que parte de {} as {} e chega em {} as {}, operando durante (o/a) {}".format(self.linha,self.origem,self.destino,self.hora_partida,self.hora_chegada,self.dias)
