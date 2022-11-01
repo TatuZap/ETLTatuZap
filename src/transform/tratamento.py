@@ -13,22 +13,22 @@ def to_json_file(dfs):
     i=0
     for df in dfs:
         i = i + 1
-        df.to_json(path_or_buf='C:\\Users\\Danilo\\Documents\\UFABC\LABES\\ETLTatuZap\\src\\output\\data'+str(i)+'.json',orient="table",index=False)
+        df.df.to_json(path_or_buf='C:\\Users\\Danilo\\Documents\\UFABC\LABES\\ETLTatuZap\\src\\output\\data'+str(i)+'.json',orient="table",index=False)
     return list
 
 
 def tratamento_json(get_all_dataframes):
     dfs = get_all_dataframes()
-    dfs[0] = tratamento_ajuste(dfs[0])
-    dfs[1] = tratamento_matriculas_pos_ajuste(dfs[1])
-    dfs[3] = tratamento_turmas_ingressantes(dfs[3])
+    dfs[0]["df"]= tratamento_ajuste(dfs[0]["df"])
+    dfs[1]["df"]= tratamento_matriculas_pos_ajuste(dfs[1]["df"])
+    dfs[3]["df"] = tratamento_turmas_ingressantes(dfs[3]["df"])
     return list_df_to_json(dfs)
 
 def tratamento_df(get_all_dataframes):
     dfs = get_all_dataframes()
-    dfs[0] = tratamento_ajuste(dfs[0])
-    dfs[1] = tratamento_matriculas_pos_ajuste(dfs[1])
-    dfs[3] = tratamento_turmas_ingressantes(dfs[3])
+    dfs[0]["df"] = tratamento_ajuste(dfs[0]["df"])
+    dfs[1]["df"] = tratamento_matriculas_pos_ajuste(dfs[1]["df"])
+    dfs[3]["df"]= tratamento_turmas_ingressantes(dfs[3]["df"])
     return dfs
 
 
