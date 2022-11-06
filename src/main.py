@@ -1,14 +1,14 @@
-from transform.tratamento import tratamento_json,tratamento_df, to_json_file
-from extract.extrator import get_all_dataframes
-from extract.get_files import files
+from load.DB import get_db,DBCollections
 
-#Retorna todos os dados em json
-#tratamento_json(get_all_dataframes)
+turmas_por_ra_collection = get_db[DBCollections.TURMAS_POR_RA]
 
-#retorna todos os dados em dataframes
-dfs = tratamento_df(get_all_dataframes)
-for i in dfs:
-    print(i["file_name"])
-#Cria arquivos json na pasta output
-#to_json_file(dfs)
+def turmas(RA):
+    QUERY = {"RA": str(RA)}
+    result = list(turmas_por_ra_collection.find(QUERY))
+    lista = result[0]["TURMAS"]
+    for res in lista:del res['_id']
+    lista_clean = [dict(item) for item in {tuple(dict.items()) for dict in lista}]
+    for disciplina in lista_clean:print(disciplina)
 
+RA = "11201722724"
+turmas(RA)

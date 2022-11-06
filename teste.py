@@ -8,17 +8,8 @@ import json
 import pandas as pd
 
 #pos ajuste
-file = 'C:\\Users\\Danilo\\Documents\\UFABC\\LABES\\ETLTatuZap\\src\\output\\data2.json'
+file = 'C:\\Users\\Danilo\\Documents\\UFABC\\LABES\\ETLTatuZap\\src\\transform\\turmas\\output\\matriculas_deferidas_pos_ajuste_2022.3.xlsx.json'
 pos_ajuste_file = open(file)
-pos_ajuste_json = json.load(pos_ajuste_file)
+pos_ajuste_json = json.load(pos_ajuste_file)['data']
 pos_ajuste_str = json.dumps(pos_ajuste_json)
-
-#ajuste
-file = 'C:\\Users\\Danilo\\Documents\\UFABC\\LABES\\ETLTatuZap\\src\\output\\data3.json'
-ajuste_file = open(file)
-ajuste_json = json.load(ajuste_file)['data']
-
-#pos ajuste to df
-
-#pos_ajuste_df = pd.read_json(pos_ajuste_str)
 
