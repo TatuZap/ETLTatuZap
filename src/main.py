@@ -9,6 +9,8 @@ def turmas(RA):
     for res in lista:del res['_id']
     lista_clean = [dict(item) for item in {tuple(dict.items()) for dict in lista}]
     for disciplina in lista_clean:print(disciplina)
+    return lista_clean
 
-RA = "11201722724"
+print('Digite seu RA:')
+RA = input()
 turmas(RA)
