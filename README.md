@@ -42,17 +42,41 @@ pip install pandas
 pip install openpyxl
 ```
 
-- Instale a biblioteca unidecode
-```sh
-# PyPI
-pip install unidecode
-```
+## Executando localmente
 
-### Execução
+### Instalando python:
 
-- Para testar a primeira query, rode o comando a seguir no diretório raiz do projeto:
-```sh
-python3 src/extract/classes_by_ra_query.py
-```
+- Windows: download do [Instalador](https://www.python.org/downloads/)
 
-OBS: Query ainda não implementada, tarefa bloqueada pelo ajuste no tratamento dos dataframes, que está com bugs
+- Linux: sudo apt-get install python3
+
+### Instalando PIP 
+
+- Windows: curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+         python get-pip.py
+         
+- Linux: sudo apt install python3-pip
+Conferindo a instalação: pip3 --version
+
+### Instalando virtualenv
+
+- pip install virtualenv
+
+#### Criando Ambiente Virtual
+
+- python3 -m venv venv
+
+#### Ativando ambiente virtual
+
+- Windows: No CMD venv\Scripts\Activate 
+
+- Linux: source venv/bin/activate
+
+### Instalando Dependencias
+
+- pip install -r requirements.txt
+
+### Executando
+
+- python src/main.py
+
