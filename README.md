@@ -23,21 +23,60 @@ Dentro do ETLTatuZap, pretendemos utilizar as seguintes tecnologias:
 ## Instruções
 Passo a passo para rodar o projeto.
 
-### Pré-requisitos
 
-Clone o repositório do Tatuzap ETL
+### Pré-requisitos
+- Clone o repositório do Tatuzap ETL
 ```sh
-https://github.com/TatuZap/ETLTatuZap.git
+git clone git@github.com:TatuZap/ETLTatuZap.git
 ```
 
-Instale a biblioteca Pandas para auxiliar na manipulação de dados
+- Instale a biblioteca Pandas para auxiliar na manipulação de dados
 ```sh
 # PyPI
 pip install pandas
 ```
-Instale está biblioteca para que seja possível ler e escrever arquivos Excel usando um código fácil
+
+- Instale esta biblioteca para que seja possível ler e escrever arquivos Excel usando um código fácil
 ```sh
 # PyPI
 pip install openpyxl
 ```
+
+## Executando localmente
+
+### Instalando python:
+
+- Windows: download do [Instalador](https://www.python.org/downloads/)
+
+- Linux: sudo apt-get install python3
+
+### Instalando PIP 
+
+- Windows: curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+         python get-pip.py
+         
+- Linux: sudo apt install python3-pip
+Conferindo a instalação: pip3 --version
+
+### Instalando virtualenv
+
+- pip install virtualenv
+
+#### Criando Ambiente Virtual
+
+- python3 -m venv venv
+
+#### Ativando ambiente virtual
+
+- Windows: No CMD venv\Scripts\Activate 
+
+- Linux: source venv/bin/activate
+
+### Instalando Dependencias
+
+- pip install -r requirements.txt
+
+### Executando
+
+- python src/main.py
 
