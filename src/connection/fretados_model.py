@@ -13,11 +13,24 @@ def list_all():
     except Exception as e:
         raise e 
 
-def next_bus(origem, destino, horario): # TODO
+def next_bus(origem, destino, horario_solicitacao, horario_limite, dia_semana): # TODO
     """
-        Função que retorna os próximos Fretados baseada na origem, destino e no horário.
+        Função que retorna os próximos Fretados baseada na origem, destino, horário_partida e intervalo.
+    Args:
+        origem: Onde o usuário se encontra.
+        destino: Onde o usuário deseja ir.
+        horario_solicitacao: Quando exatamente ele fez essa requisição ?. 
+        horario_limite: Qual a carência permitida ?20 minutos é o padrão.
+    Returns:
+        Cursor (tipo iterável) do pymongo com a resposta, que pode ser vazia.
     """
-    return _get_collection().find({ "origem": origem, "destino": destino }) # TODO hour comparison
+    
+    return _get_collection().find({
+        "origem": origem,
+        "destino": destino,
+        "dias" : "SEMANA" if dia_semana < 5 else "SABADO",
+        "hora_partida" : {"$gte" : horario_solicitacao, "$lt": horario_limite}
+    })
 
 def find_by_linha(linha):
     """

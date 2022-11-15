@@ -1,20 +1,27 @@
 import fretados_model
 import catalogo_model
-
+import datetime
 # Como popular o banco de dados
 fretados_model.populate_database()
 
-catalogo_model.populate_database()
+#catalogo_model.populate_database()
 
 # Listando tudo que foi recuperado
-print("Listando todos os Fretados")
-for item in fretados_model.list_all():
+# print("Listando todos os Fretados")
+# for item in fretados_model.list_all():
+#     print(item)
+
+tempo = "13:00"
+
+tempo_limite = "24:00"
+
+#print(fretados_model.next_bus("SA","SBC",tempo))
+for item in fretados_model.next_bus("SA","SBC",tempo,tempo_limite,5):
     print(item)
 
-
-print("Listando todos as turmas do catálogo")
-for item in catalogo_model.list_all():
-    print(item)
+# print("Listando todos as turmas do catálogo")
+# for item in catalogo_model.list_all():
+#     print(item)
 
 
 # Listando os que saem de SA e vão para SBC
