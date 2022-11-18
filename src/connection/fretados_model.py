@@ -107,7 +107,7 @@ def _get_collection():
         Função que retorna a coleção de Fretados
     """
     try:
-        return get_db.get_collection(DBCollections.TURMAS)
+        return get_db.get_collection(DBCollections.FRETADOS)
     except Exception as e:
         raise e
 class FretadosModel:
