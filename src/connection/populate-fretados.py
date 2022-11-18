@@ -1,6 +1,11 @@
 import fretados_model
 import catalogo_model
+import restaurante_model
 
+restaurante_model.populate_database()
+for item in restaurante_model.list_all():
+    print(item)
+    
 # Como popular o banco de dados
 #fretados_model.populate_database()
 
@@ -13,8 +18,8 @@ import catalogo_model
 
 
 # print("Listando todos as turmas do catálogo")
-for item in catalogo_model.find_by_apelido("em"):
-    print(item["disciplina"])
+#for item in catalogo_model.find_by_apelido("em"):
+#   print(item["disciplina"])
 
 
 # Listando os que saem de SA e vão para SBC
