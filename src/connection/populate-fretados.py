@@ -2,16 +2,14 @@ import fretados_model
 import catalogo_model
 import datetime
 # Como popular o banco de dados
-fretados_model.populate_database()
+#fretados_model.populate_database()
 
-#catalogo_model.populate_database()
+##catalogo_model.populate_database()
 
-# Listando tudo que foi recuperado
+# # Listando tudo que foi recuperado
 # print("Listando todos os Fretados")
 # for item in fretados_model.list_all():
 #     print(item)
-
-tempo = "13:00"
 
 tempo_limite = "24:00"
 

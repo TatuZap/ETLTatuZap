@@ -32,16 +32,40 @@ def next_bus(origem, destino, horario_solicitacao, horario_limite, dia_semana): 
         "hora_partida" : {"$gte" : horario_solicitacao, "$lt": horario_limite}
     })
 
-def find_by_linha(linha):
+def find_by_linha(linha, dia_semana):
     """
         Função que retorna todos os Fretados com base na linha
     """
     try:
-        response = _get_collection().find_one({ "linha": linha })
+        response = _get_collection().find_one({ 
+            "linha": linha,
+            "dias" : "SEMANA" if dia_semana < 5 else "SABADO"
+        })
         if response:
             return response
     except Exception as e:
         raise e
+
+def find_by_all_fields(linha ,origem, destino, hora_partida, hora_chegada, dia_semana):
+    """
+        Função que retorna todos os fretados que satisfazem
+        que possuem todos seus campos mapeados pela busca.
+    """
+    try:
+        response = _get_collection().find({ 
+            "linha" : linha,
+            "origem" : origem,
+            "destino" : destino,
+            "hora_partida" : hora_partida,
+            "hora_chegada" : hora_chegada,
+            "dias" : dia_semana
+        }
+        ).limit(1)
+        if response:
+            return response
+    except Exception as e:
+        raise e
+
 
 def insert_item(item):
     """
@@ -96,7 +120,7 @@ def _get_collection():
         Função que retorna a coleção de Fretados
     """
     try:
-        return get_db.get_collection(DBCollections.TURMAS)
+        return get_db.get_collection(DBCollections.FRETADOS)
     except Exception as e:
         raise e
 class FretadosModel:
