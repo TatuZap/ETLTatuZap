@@ -10,6 +10,7 @@ class DBCollections:
     TURMAS = "turmas"
     FRETADOS = "fretados"
     CATALOGO = "catalogo"
+    USUARIO =  "usuario"
     RESTAURANTE = "restaurante"
 @dataclass
 class DBconfig:
