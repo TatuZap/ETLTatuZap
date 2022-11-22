@@ -10,6 +10,7 @@ class DBCollections:
     TURMAS = "turmas"
     FRETADOS = "fretados"
     CATALOGO = "catalogo"
+    RESTAURANTE = "restaurante"
 @dataclass
 class DBconfig:
     DB_URL = "mongodb+srv://{}:{}@cluster0.dw7svve.mongodb.net/?retryWrites=true&w=majority".format(os.getenv("MONGO_USER_NAME"),os.getenv("MONGO_SECRET"))
