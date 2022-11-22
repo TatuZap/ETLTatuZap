@@ -3,7 +3,7 @@ import catalogo_model
 import restaurante_model
 
 restaurante_model.populate_database()
-for item in restaurante_model.list_all():
+for item in restaurante_model.find_by_weekday_str("23/11",1):
     print(item)
     
 # Como popular o banco de dados

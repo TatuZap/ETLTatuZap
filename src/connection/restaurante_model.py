@@ -26,6 +26,51 @@ def insert_item(item):
     except Exception as e:
         raise e
 
+def find_by_weekday_str(data, complete_info=0):
+    """
+        Função que retorna informações acerca do almoço ou janta do RU
+        Args: 
+        data em forma de string dia/mes
+        complete_info é um inteiro que possui valores entre 0 e 2 
+        0 -> Almoço e janta
+        1 -> Somente Almoço 
+        2 -> Somente Janta 
+    """
+    try:
+        if complete_info == 0 :
+            response = _get_collection().find({ "data": data })
+        elif complete_info == 1:
+            response = _get_collection().find({ "data": data }, {"jantar" : 0})
+        else: 
+            response = _get_collection().find({ "data": data }, {"almoço" : 0})
+        if response:
+            return response
+    except Exception as e:
+        raise e
+
+def find_by_weekday_num(dia_semana, complete_info=0):
+    """
+        Função que retorna informações acerca do almoço ou janta do RU
+        Args: 
+        dia_semana é um numero de 0  a 6 (segunda a domingo)
+        complete_info é um inteiro que possui valores entre 0 e 2 
+        0 -> Almoço e janta
+        1 -> Somente Almoço 
+        2 -> Somente Janta 
+    """
+    try:
+        if complete_info == 0 :
+            response = _get_collection().find({ "dia_semana": dia_semana })
+        elif complete_info == 1:
+            response = _get_collection().find({ "dia_semana": dia_semana }, {"jantar" : 0})
+        else: 
+            response = _get_collection().find({ "dia_semana": dia_semana }, {"almoço" : 0 })
+        if response:
+            return response
+    except Exception as e:
+        raise e
+
+
 def insert_items(items):
     """
         Função que insere uma lista de Restaurante na Coleção de Restaurante
