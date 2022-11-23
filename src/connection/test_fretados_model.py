@@ -1,7 +1,6 @@
 import unittest
 import fretados_model
-import json 
-
+import json
 
 class TestFretadoModel(unittest.TestCase):
     """
@@ -32,7 +31,7 @@ class TestFretadoModel(unittest.TestCase):
             fretados_model.insert_item(json.loads(json.dumps(bus)))
         except Exception as e:
             self.fail("A inserção não deve retornar Erro")
-    
+
     def test_insert_item_find(self):
         """
             Um elemento inserido deve ser recuperável sem retornar erros.
@@ -53,7 +52,7 @@ class TestFretadoModel(unittest.TestCase):
                 hora_chegada=bus["hora_chegada"],
                 origem=bus["origem"],
                 destino=bus["destino"],
-                dia_semana=bus["dias"]                
+                dia_semana=bus["dias"]
             )
             #self.assertGreater(len(list(response_find)), 0, "Ao inserir um elemento, este deve estar no banco.")
         except Exception as e:
@@ -80,7 +79,7 @@ class TestFretadoModel(unittest.TestCase):
             hora_chegada=bus["hora_chegada"],
             origem=bus["origem"],
             destino=bus["destino"],
-            dia_semana=bus["dias"]                
+            dia_semana=bus["dias"]
         )
         bus_retrieved = list(response)[0]
         del bus_retrieved["_id"] # deleta o atributo "_id" que vem do banco de dados e não usamos para nada

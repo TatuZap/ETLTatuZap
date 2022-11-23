@@ -11,7 +11,7 @@ def list_all():
         if response.explain()["executionStats"]["executionSuccess"]: # Procura nos Status se a operação deu Certo
             return response
     except Exception as e:
-        raise e 
+        raise e
 
 def find_by_apelido(apelido):
     """
@@ -75,7 +75,7 @@ def populate_database():
 
     # get dataframe
     clean_df = clean_catalogo_df(catalogo_df)
-    
+
     # preparando as tabelas para inseri-las elemento a elemento no banco
     catalogo_json = json.loads(clean_df.to_json(orient='records'))
 
@@ -85,7 +85,7 @@ def populate_database():
 # função privada dentro desse módulo
 def _get_collection():
     """
-        Função que retorna a coleção de Fretados
+        Função que retorna a coleção de Disciplinas
     """
     try:
         return get_db.get_collection(DBCollections.CATALOGO)
