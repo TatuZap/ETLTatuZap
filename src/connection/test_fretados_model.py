@@ -25,6 +25,7 @@ class TestFretadoModel(unittest.TestCase):
             "hora_chegada": "07:07",
             "origem":"test_insert_item_inserts",
             "destino":"test_insert_item_inserts",
+            "desembarque_terminal_leste": "N/A",
             "dias":"SEMANA"
         }
         try:
@@ -42,6 +43,7 @@ class TestFretadoModel(unittest.TestCase):
             "hora_chegada": "07:07",
             "origem":"test_insert_item_find",
             "destino":"test_insert_item_find",
+            "desembarque_terminal_leste": "N/A",
             "dias":"SEMANA"
         }
         try:
@@ -52,6 +54,7 @@ class TestFretadoModel(unittest.TestCase):
                 hora_chegada=bus["hora_chegada"],
                 origem=bus["origem"],
                 destino=bus["destino"],
+                desembarque_terminal_leste=bus["desembarque_terminal_leste"],
                 dia_semana=bus["dias"]
             )
             #self.assertGreater(len(list(response_find)), 0, "Ao inserir um elemento, este deve estar no banco.")
@@ -69,6 +72,7 @@ class TestFretadoModel(unittest.TestCase):
             "hora_chegada": "07:07",
             "origem":"test_insert_item_find_retrieve",
             "destino":"test_insert_item_find_retrieve",
+            "desembarque_terminal_leste": "N/A",
             "dias":"SEMANA"
         }
 
@@ -79,6 +83,7 @@ class TestFretadoModel(unittest.TestCase):
             hora_chegada=bus["hora_chegada"],
             origem=bus["origem"],
             destino=bus["destino"],
+            desembarque_terminal_leste=bus["desembarque_terminal_leste"],
             dia_semana=bus["dias"]
         )
         bus_retrieved = list(response)[0]
@@ -95,6 +100,7 @@ class TestFretadoModel(unittest.TestCase):
             "hora_chegada": "07:07",
             "origem":"test_insert_items_inserts",
             "destino":"test_insert_items_inserts",
+            "desembarque_terminal_leste": "N/A",
             "dias":"SEMANA"
         }
         bus_2 = {
@@ -103,6 +109,7 @@ class TestFretadoModel(unittest.TestCase):
             "hora_chegada": "07:07",
             "origem":"test_insert_items_inserts",
             "destino":"test_insert_items_inserts",
+            "desembarque_terminal_leste": "N/A",
             "dias":"SABADO"
         }
         bus = [ json.loads(json.dumps(bus)) for bus in [bus_1,bus_2]]
