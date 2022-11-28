@@ -1,6 +1,6 @@
 import unittest
 import fretados_model
-import json
+from fretados_model import Fretado
 
 class TestFretadoModel(unittest.TestCase):
     """
@@ -12,23 +12,20 @@ class TestFretadoModel(unittest.TestCase):
             O list_all após população deve retornar ao menos 1 elemento
         """
         #fretados_model.populate_database() # garante que o database foi populado
+
         all_bus = fretados_model.list_all() # lista todos
-        self.assertGreater(len(list(all_bus)), 0,"A lista deve ser não nula")
+
+        self.assertGreater(len(list(all_bus)), 0, "A lista deve ser não nula")
 
     def test_insert_item_inserts(self):
         """
             A função de inserção de um único elemento não deve retornar erros.
         """
-        bus = {
-            "linha": -1,
-            "hora_partida": "07:07",
-            "hora_chegada": "07:07",
-            "origem":"test_insert_item_inserts",
-            "destino":"test_insert_item_inserts",
-            "dias":"SEMANA"
-        }
+
+        bus = Fretado(-1, "SEMANA", "SA", "07:07", "SBC", "07:17")
+
         try:
-            fretados_model.insert_item(json.loads(json.dumps(bus)))
+            fretados_model.insert_item(bus.to_dict())
         except Exception as e:
             self.fail("A inserção não deve retornar Erro")
 
@@ -36,25 +33,12 @@ class TestFretadoModel(unittest.TestCase):
         """
             Um elemento inserido deve ser recuperável sem retornar erros.
         """
-        bus = {
-            "linha": -1,
-            "hora_partida": "07:07",
-            "hora_chegada": "07:07",
-            "origem":"test_insert_item_find",
-            "destino":"test_insert_item_find",
-            "dias":"SEMANA"
-        }
+        bus = Fretado(-1, "SEMANA", "SA", "07:07", "SBC", "07:17")
+
         try:
-            fretados_model.insert_item(json.loads(json.dumps(bus)))
-            fretados_model.find_by_all_fields(
-                linha=bus["linha"],
-                hora_partida=bus["hora_partida"],
-                hora_chegada=bus["hora_chegada"],
-                origem=bus["origem"],
-                destino=bus["destino"],
-                dia_semana=bus["dias"]
-            )
-            #self.assertGreater(len(list(response_find)), 0, "Ao inserir um elemento, este deve estar no banco.")
+            fretados_model.insert_item(bus.to_dict())
+
+            fretados_model.find_by_all_fields(**(bus.to_dict()))
         except Exception as e:
             self.fail("Um elemento inserido deve ser recuperado sem erro")
 
@@ -63,51 +47,31 @@ class TestFretadoModel(unittest.TestCase):
         """
             Um elemento inserido deve ser recuperado.
         """
-        bus = {
-            "linha": -1,
-            "hora_partida": "07:07",
-            "hora_chegada": "07:07",
-            "origem":"test_insert_item_find_retrieve",
-            "destino":"test_insert_item_find_retrieve",
-            "dias":"SEMANA"
-        }
+        bus = Fretado(-1, "SEMANA", "SA", "07:07", "SBC", "07:17")
 
-        fretados_model.insert_item(json.loads(json.dumps(bus)))
-        response = fretados_model.find_by_all_fields(
-            linha=bus["linha"],
-            hora_partida=bus["hora_partida"],
-            hora_chegada=bus["hora_chegada"],
-            origem=bus["origem"],
-            destino=bus["destino"],
-            dia_semana=bus["dias"]
+        fretados_model.insert_item(bus.to_dict())
+
+        response = fretados_model.find_by_all_fields(**(bus.to_dict()))
+
+        bus_retrieved = Fretado.from_dict(list(response)[0])
+
+        self.assertEqual(
+            sorted(bus.to_dict().items()),
+            sorted(bus_retrieved.to_dict().items()),
+            "O elemento inserido deve ser igual ao recuperado",
         )
-        bus_retrieved = list(response)[0]
-        del bus_retrieved["_id"] # deleta o atributo "_id" que vem do banco de dados e não usamos para nada
-        self.assertEqual(sorted(json.loads(json.dumps(bus)).items()), sorted(json.loads(json.dumps(bus_retrieved)).items()), "O elemento inserido deve ser igual ao recuperado")
 
     def test_insert_items_inserts(self):
         """
             A função de inserção de multiplos elementos não deve retornar erros.
         """
-        bus_1 = {
-            "linha": -1,
-            "hora_partida": "07:07",
-            "hora_chegada": "07:07",
-            "origem":"test_insert_items_inserts",
-            "destino":"test_insert_items_inserts",
-            "dias":"SEMANA"
-        }
-        bus_2 = {
-            "linha": 0,
-            "hora_partida": "07:07",
-            "hora_chegada": "07:07",
-            "origem":"test_insert_items_inserts",
-            "destino":"test_insert_items_inserts",
-            "dias":"SABADO"
-        }
-        bus = [ json.loads(json.dumps(bus)) for bus in [bus_1,bus_2]]
+
+        bus_1 = Fretado(-1, "SEMANA", "SA", "07:07", "SBC", "07:17").to_dict()
+
+        bus_2 = Fretado(2, "SEMANA", "SBC", "08:07", "SA", "08:17").to_dict()
+
         try:
-            response = fretados_model.insert_items(bus)
+            fretados_model.insert_items([bus_1, bus_2])
         except Exception as e:
             self.fail("A inserção de multiplos elementos não deve retornar Erro")
 
