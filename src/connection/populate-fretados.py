@@ -7,19 +7,18 @@ fretados_model.populate_database()
 
 # ##catalogo_model.populate_database()
 
-for item in usuario_model.list_all():
-    print(item)
-
-# # Listando tudo que foi recuperado
-# print("Listando todos os Fretados")
-# for item in fretados_model.list_all():
+# for item in usuario_model.list_all():
 #     print(item)
 
-tempo_limite = "24:00"
+print("Listando todos os Fretados")
+for item in fretados_model.list_all():
+    print(item)
+
+# tempo_limite = "24:00"
 
 #print(fretados_model.next_bus("SA","SBC",tempo))
-for item in fretados_model.next_bus("SA","SBC",tempo,tempo_limite,5):
-    print(item)
+# for item in fretados_model.next_bus("SA","SBC",tempo,tempo_limite,5):
+#     print(item)
 
 # print("Listando todos as turmas do catálogo")
 # for item in catalogo_model.list_all():
