@@ -1,10 +1,8 @@
-import json
-from database import get_db, DBCollections
-from raspador_catalogo import catalogo_df, clean_catalogo_df
+from ..database import get_db, DBCollections
 
 def list_all():
     """
-        Função que retorna as disciplinas no catálogo da ufabc
+        Função que retorna todos os usuários
     """
     try:
         response = _get_collection().find()
@@ -13,23 +11,24 @@ def list_all():
     except Exception as e:
         raise e
 
-def find_by_apelido(apelido):
+
+def find_by_id(id):
     """
-        Função que retorna informações acerca da disciplina atravez do apelido
+        Função que retorna um usuário com base na no seu id único
     """
     try:
-        response = _get_collection().find({ "apelido": apelido })
+        response = _get_collection().find_one({ "id": id })
         if response:
             return response
     except Exception as e:
         raise e
 
-def find_by_sigla(sigla):
+def find_and_update(id, ra):
     """
-        Função que retorna informações acerca da disciplina atravez da sigla
+        Função que retorna um usuário com base na no seu id único
     """
     try:
-        response = _get_collection().find({ "sigla": sigla })
+        response = _get_collection().update_one({ "id": id }, { "$set": { "ra" : ra } } )
         if response:
             return response
     except Exception as e:
@@ -37,7 +36,7 @@ def find_by_sigla(sigla):
 
 def insert_item(item):
     """
-        Função que insere uma disciplina na Coleção de Disciplinas
+        Função que insere um usuário na Coleção de usuários
     """
     try:
         response = _get_collection().insert_one(item)
@@ -48,7 +47,7 @@ def insert_item(item):
 
 def insert_items(items):
     """
-        Função que insere uma lista de disciplinas na Coleção Catalogo
+        Função que insere uma lista de usuários na Coleção dos usuários
     """
     try:
         response = _get_collection().insert_many(items)
@@ -60,7 +59,7 @@ def insert_items(items):
 
 def delete_all():
     """
-        Função que remove as disciplinas da Coleção de catálogo
+        Função que remove todas as entradas da Coleção de usuário
     """
     try:
         response = _get_collection().delete_many({})
@@ -69,26 +68,23 @@ def delete_all():
     except Exception as e:
         raise e
 
-def populate_database():
-    # deleta o conteúdo atual do banco
-    delete_all()
-
-    # get dataframe
-    clean_df = clean_catalogo_df(catalogo_df)
-
-    # preparando as tabelas para inseri-las elemento a elemento no banco
-    catalogo_json = json.loads(clean_df.to_json(orient='records'))
-
-    # inserção
-    insert_items(catalogo_json)
-
 # função privada dentro desse módulo
 def _get_collection():
     """
-        Função que retorna a coleção de Disciplinas
+        Função que retorna a Coleção de usuários
     """
     try:
-        return get_db.get_collection(DBCollections.CATALOGO)
+        return get_db.get_collection(DBCollections.USUARIO)
     except Exception as e:
         raise e
 
+class Usuario:
+    """
+        Um usuário possui um identificar único e possivelmente um RA.
+    """
+    def __init__(self, id, ra=None) -> None:
+        self. id = id 
+        self.ra = ra
+    
+    def __str__(self) -> str:
+        return "Usuário: {}".format(self.id)

@@ -18,7 +18,6 @@ class DBconfig:
     DB_NAME = "tatuzap"
     DB_COLLECTIONS = DBCollections
 
-
 """
    Singleton pattern by module
 """

@@ -1,8 +1,6 @@
 import json
-import raspador_restaurante
-import pandas as pd 
-from database import get_db, DBCollections
-from raspador_restaurante import tables_on_page, clean_restaurant_df
+import src.restaurante.restaurante_raspador as restaurante_raspador
+from ..database import get_db, DBCollections
 
 def list_all():
     """
@@ -99,7 +97,7 @@ def populate_database():
     delete_all()
 
     # get dataframe
-    parsed_dataframe = raspador_restaurante.clean_restaurant_df(raspador_restaurante.tables_on_page)
+    parsed_dataframe = restaurante_raspador.clean_restaurant_df(restaurante_raspador.tables_on_page)
 
     # preparando as tabelas para inseri-las elemento a elemento no banco
     Restaurante_json = json.loads(parsed_dataframe.to_json(orient='records'))

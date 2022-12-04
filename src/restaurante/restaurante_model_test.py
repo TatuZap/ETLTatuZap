@@ -1,7 +1,6 @@
 import unittest
 import restaurante_model
-import json 
-
+import json
 
 class TestFretadoModel(unittest.TestCase):
     """
@@ -32,7 +31,7 @@ class TestFretadoModel(unittest.TestCase):
         except Exception as e:
             print(e)
             self.fail("A inserção não deve retornar Erro")
-    
+
     def test_insert_item_find(self):
         """
             Um elemento inserido deve ser recuperável sem retornar erros.

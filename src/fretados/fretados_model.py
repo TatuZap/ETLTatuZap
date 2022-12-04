@@ -1,6 +1,6 @@
 import json
-from database import get_db, DBCollections
-from raspador_fretados import tables_on_page, clean_bus_df
+from src.fretados.fretados_raspador import tables_on_page, clean_bus_df
+from ..database import get_db, DBCollections
 
 def list_all():
     """
@@ -123,6 +123,7 @@ def _get_collection():
         return get_db.get_collection(DBCollections.FRETADOS)
     except Exception as e:
         raise e
+
 class FretadosModel:
     """
     Classe que Modela o Objeto de negócio Fretado

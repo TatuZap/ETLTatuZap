@@ -61,7 +61,6 @@ class TestFretadoModel(unittest.TestCase):
         except Exception as e:
             self.fail("Um elemento inserido deve ser recuperado sem erro")
 
-
     def test_insert_item_find_retrieve(self):
         """
             Um elemento inserido deve ser recuperado.
