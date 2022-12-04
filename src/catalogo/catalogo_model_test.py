@@ -1,5 +1,5 @@
 import unittest
-import catalogo_model
+from src.catalogo.catalogo_model import populate_database, list_all, find_by_apelido, find_by_sigla, insert_item, insert_items, delete_all
 import json
 
 class TestCatalogoModel(unittest.TestCase):
@@ -12,8 +12,8 @@ class TestCatalogoModel(unittest.TestCase):
     """
         O list_all após população deve retornar ao menos 1 elemento
     """
-    catalogo_model.populate_database() # garante que o database foi populado
-    all_classes = catalogo_model.list_all() # lista todos
+    populate_database() # garante que o database foi populado
+    all_classes = list_all() # lista todos
 
     self.assertGreater(len(list(all_classes)), 0,"A lista deve ser não nula")
 
@@ -21,21 +21,21 @@ class TestCatalogoModel(unittest.TestCase):
     """
         O método find_by_apelido deve achar a disciplina com o apelido indicado
     """
-    catalogo_model.populate_database() # garante que o database foi populado
+    populate_database() # garante que o database foi populado
     apelido = "bm"
-    find_by_apelido = catalogo_model.find_by_apelido(apelido)
+    find_by_apelido_result = find_by_apelido(apelido)
 
-    self.assertEqual(list(find_by_apelido)[0]['disciplina'], 'Bases Matematicas', "Deveria ter achado a matéria pelo apelido")
+    self.assertEqual(list(find_by_apelido_result)[0]['disciplina'], 'Bases Matematicas', "Deveria ter achado a matéria pelo apelido")
 
   def test_find_by_sigla(self):
     """
         O método find_by_sigla deve achar a sigla com o apelido indicado
     """
-    catalogo_model.populate_database() # garante que o database foi populado
+    populate_database() # garante que o database foi populado
     sigla = "BIS0003-15"
-    find_by_sigla = catalogo_model.find_by_sigla(sigla)
+    find_by_sigla_result = find_by_sigla(sigla)
 
-    self.assertEqual(list(find_by_sigla)[0]['disciplina'], 'Bases Matematicas', "Deveria ter achado a matéria pela sigla")
+    self.assertEqual(list(find_by_sigla_result)[0]['disciplina'], 'Bases Matematicas', "Deveria ter achado a matéria pela sigla")
 
   def test_insert_item_inserts(self):
     """
@@ -51,7 +51,7 @@ class TestCatalogoModel(unittest.TestCase):
         "apelido": "Apelido teste"
     }
     try:
-        catalogo_model.insert_item(json.loads(json.dumps(disciplina)))
+        insert_item(json.loads(json.dumps(disciplina)))
     except Exception as e:
         self.fail("A inserção não deve retornar Erro")
 
@@ -69,9 +69,9 @@ class TestCatalogoModel(unittest.TestCase):
       "apelido": "Apelido teste"
     }
     try:
-      catalogo_model.insert_item(json.loads(json.dumps(disciplina)))
-      catalogo_model.find_by_sigla(disciplina['sigla'])
-      catalogo_model.find_by_apelido(disciplina['apelido'])
+      insert_item(json.loads(json.dumps(disciplina)))
+      find_by_sigla(disciplina['sigla'])
+      find_by_apelido(disciplina['apelido'])
     except Exception as e:
       self.fail("Um elemento inserido deve ser recuperado sem erro")
 
@@ -91,8 +91,8 @@ class TestCatalogoModel(unittest.TestCase):
       "apelido": "Apelido teste"
     }
 
-    catalogo_model.insert_item(json.loads(json.dumps(disciplina)))
-    searched_class = catalogo_model.find_by_sigla(disciplina['sigla'])
+    insert_item(json.loads(json.dumps(disciplina)))
+    searched_class = find_by_sigla(disciplina['sigla'])
 
     class_retrieved = list(searched_class)[0]
     del class_retrieved["_id"] # deleta o atributo "_id" que vem do banco de dados e não usamos para nada
@@ -128,7 +128,7 @@ class TestCatalogoModel(unittest.TestCase):
     disciplinas = [ json.loads(json.dumps(disciplina)) for disciplina in [disciplina_1, disciplina_2] ]
 
     try:
-      catalogo_model.insert_items(disciplinas)
+      insert_items(disciplinas)
     except Exception as e:
       self.fail("A inserção de multiplos elementos não deve retornar Erro")
 
@@ -136,22 +136,22 @@ class TestCatalogoModel(unittest.TestCase):
     """
         A função de delecao de todos os elementos deve deixar o banco vazio.
     """
-    catalogo_model.delete_all()
+    delete_all()
 
-    self.assertEqual(catalogo_model.find_all(), [], "Ao deletar tudo deve ficar vazio")
+    self.assertEqual(list(list_all()), [], "Ao deletar tudo deve ficar vazio")
 
-    catalogo_model.populate_database()
+    populate_database()
     return
 
   def test_populate_database(self):
     """
         A função de popular o banco deixar o banco com todos os elementos.
     """
-    catalogo_model.delete_all()
+    delete_all()
 
-    catalogo_model.populate_database()
+    populate_database()
 
-    self.assertGreater(len(list(catalogo_model.list_all())), 0, "A lista deve ser não nula")
+    self.assertGreater(len(list(list_all())), 0, "A lista deve ser não nula")
     return
 
 if __name__ == '__main__':
