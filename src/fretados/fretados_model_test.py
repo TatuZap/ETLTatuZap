@@ -21,7 +21,7 @@ class TestFretadoModel(unittest.TestCase):
             A função de inserção de um único elemento não deve retornar erros.
         """
 
-        bus = Fretado(-1, "SEMANA", "SA", "07:07", "SBC", "07:17")
+        bus = Fretado(-1, "SEMANA", "SA", "07:07", "SBC", "07:17", 'N/A')
 
         try:
             insert_item(bus.to_dict())
@@ -32,7 +32,7 @@ class TestFretadoModel(unittest.TestCase):
         """
             Um elemento inserido deve ser recuperável sem retornar erros.
         """
-        bus = Fretado(-1, "SEMANA", "SA", "07:07", "SBC", "07:17")
+        bus = Fretado(-1, "SEMANA", "SA", "07:07", "SBC", "07:17", 'N/A')
 
         try:
             insert_item(bus.to_dict())
@@ -46,7 +46,7 @@ class TestFretadoModel(unittest.TestCase):
         """
             Um elemento inserido deve ser recuperado.
         """
-        bus = Fretado(-1, "SEMANA", "SA", "07:07", "SBC", "07:17")
+        bus = Fretado(-1, "SEMANA", "SA", "07:07", "SBC", "07:17", 'N/A')
 
         insert_item(bus.to_dict())
 
@@ -65,9 +65,9 @@ class TestFretadoModel(unittest.TestCase):
             A função de inserção de multiplos elementos não deve retornar erros.
         """
 
-        bus_1 = Fretado(-1, "SEMANA", "SA", "07:07", "SBC", "07:17").to_dict()
+        bus_1 = Fretado(-1, "SEMANA", "SA", "07:07", "SBC", "07:17", 'N/A').to_dict()
 
-        bus_2 = Fretado(2, "SEMANA", "SBC", "08:07", "SA", "08:17").to_dict()
+        bus_2 = Fretado(2, "SEMANA", "SBC", "08:07", "SA", "08:17", 'N/A').to_dict()
 
         try:
             insert_items([bus_1, bus_2])

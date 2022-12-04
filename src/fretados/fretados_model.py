@@ -46,7 +46,7 @@ def find_by_linha(linha, dia_semana):
     except Exception as e:
         raise e
 
-def find_by_all_fields(linha ,origem, destino, hora_partida, hora_chegada, dias):
+def find_by_all_fields(linha ,origem, destino, hora_partida, hora_chegada, dias, desembarque_terminal_leste):
     """
         Função que retorna todos os fretados que satisfazem
         que possuem todos seus campos mapeados pela busca.
@@ -58,7 +58,8 @@ def find_by_all_fields(linha ,origem, destino, hora_partida, hora_chegada, dias)
             "destino" : destino,
             "hora_partida" : hora_partida,
             "hora_chegada" : hora_chegada,
-            "dias" : dias
+            "dias" : dias,
+            "desembarque_terminal_leste": desembarque_terminal_leste,
         }
         ).limit(1)
         if response:
@@ -127,20 +128,22 @@ def _get_collection():
 class Fretado:
     """
     Classe que Modela o Objeto de negócio Fretado
-    - linha:           O número da linha de onibus, pode ter valores de 1 a 6
-    - dias:            Pode ser de dois valores 'SEMANA' e 'SABADO'
-    - origem:          Pode ser de dois valores 'SA' e 'SBC'
-    - hora_partida:    Pode ser do valor de um horário, tipo '8:25' ou 'N/A' caso não tenha valor
-    - destino:         Pode ser de dois valores 'SA' e 'SBC'
-    - hora_chegada:    Pode ser do valor de um horário, tipo '8:25' ou 'N/A' caso não tenha valor
+    - linha:                      O número da linha de onibus, pode ter valores de 1 a 6
+    - dias:                       Pode ser de dois valores 'SEMANA' e 'SABADO'
+    - origem:                     Pode ser de dois valores 'SA' e 'SBC'
+    - hora_partida:               Pode ser do valor de um horário, tipo '8:25' ou 'N/A' caso não tenha valor
+    - destino:                    Pode ser de dois valores 'SA' e 'SBC'
+    - hora_chegada:               Pode ser do valor de um horário, tipo '8:25' ou 'N/A' caso não tenha valor
+    - desembarque_terminal_leste: Caso tenha desembarque no Terminal Leste é o valor de um horário, tipo '8:25', caso contrário, 'N/A'
     """
-    def __init__(self, linha, dias, origem, hora_partida, destino, hora_chegada) -> None:
+    def __init__(self, linha, dias, origem, hora_partida, destino, hora_chegada, desembarque_terminal_leste) -> None:
         self.dias = dias
         self.origem = origem
         self.destino = destino
         self.hora_partida = hora_partida
         self.hora_chegada = hora_chegada
         self.linha = linha
+        self.desembarque_terminal_leste = desembarque_terminal_leste
 
     def __str__(self) -> str:
         return "Fretado da Linha: {} que parte de {} as {} e chega em {} as {}, operando durante (o/a) {}".format(self.linha,self.origem,self.destino,self.hora_partida,self.hora_chegada,self.dias)
