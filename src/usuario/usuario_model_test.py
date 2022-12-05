@@ -1,7 +1,7 @@
 import unittest
-import usuario_model
-import json 
-
+import json
+from copy import deepcopy
+from usuario_model import list_all, insert_item, find_by_id, find_and_update, Usuario
 
 class TestUsuarioModel(unittest.TestCase):
     """
@@ -12,16 +12,18 @@ class TestUsuarioModel(unittest.TestCase):
         """
             O list_all após população deve retornar ao menos 1 elemento
         """
-        all_user = usuario_model.list_all() # lista todos
+        all_user = list_all() # lista todos
         self.assertGreater(len(list(all_user)), 0," A lista deve ser não nula")
 
     def test_insert_item(self):
         """
             A inserção não deve retornar erros
         """
-        user = {"ra":"11201722051","id":1}
+
+        user = Usuario('11201722051', 1)
+
         try:
-            usuario_model.insert_item(json.loads(json.dumps(user)))
+            insert_item(user.to_dict())
         except Exception as e:
             self.fail("Não deveria retornar erros")
     
@@ -29,22 +31,25 @@ class TestUsuarioModel(unittest.TestCase):
         """
             A busca deve retorna exatamente o mesmo elemento
         """
-        user = {"ra":"11201810691","id":2}
 
-        usuario_model.insert_item(json.loads(json.dumps(user)))
-        retrieved_user = usuario_model.find_by_id(user["id"])
+        user = Usuario('11201722051', 1)
+
+        insert_item(deepcopy(user.to_dict()))
+        retrieved_user = find_by_id(user["id"])
         del retrieved_user["_id"]
-        self.assertEqual(sorted(json.loads(json.dumps(user)).items()), sorted(json.loads(json.dumps(retrieved_user)).items()), "O elemento inserido deve ser igual ao recuperado")
+        self.assertEqual(sorted(user.to_dict().items()), sorted(retrieved_user.items()), "O elemento inserido deve ser igual ao recuperado")
 
 
     def test_find_and_update(self):
         """
             A Atualização de um usuário não deve retornar erros
         """
-        user = {"ra":"11201810691","id":10}
+
+        user = Usuario('11201722051', 1)
+
         try:
-            usuario_model.insert_item(json.loads(json.dumps(user)))
-            usuario_model.find_and_update(user["id"],"11201721679")
+            insert_item(deepcopy(user.to_dict()))
+            find_and_update(user.id,"11201721679")
         except Exception as e:
             self.fail("Não deveria retornar erros")
         
@@ -53,21 +58,20 @@ class TestUsuarioModel(unittest.TestCase):
         """
             A Atualização de um usuário não deve retornar erros
         """
-        user = {"ra":"11201810691","id":1900}
-        usuario_model.insert_item(json.loads(json.dumps(user)))
-        usuario_model.find_and_update(user["id"],"1212121212")
-        retrieved_user = usuario_model.find_by_id(user["id"])
+
+        user = Usuario('11201722051', 1)
+
+        insert_item(deepcopy(user.to_dict()))
+        find_and_update(user.id, "1212121212")
+        retrieved_user = find_by_id(user.id)
         del retrieved_user["_id"]
         # minha vericação é nos campos
         diffs = 0
-        for key in user.keys():
-            if user[key] != retrieved_user[key]:
+        for key in user.to_dict().keys():
+            if user.to_dict()[key] != retrieved_user[key]:
                 diffs += 1
         
         self.assertEqual(diffs, 1, "O elemento modificado dista em apenas um campo")
-
-
-
 
 if __name__ == '__main__':
     unittest.main()
