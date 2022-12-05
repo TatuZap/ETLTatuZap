@@ -1,4 +1,3 @@
-from copy import deepcopy
 from src.fretados.fretados_raspador import tables_on_page, clean_bus_df
 from ..database import get_db, DBCollections
 
@@ -73,7 +72,7 @@ def insert_item(item):
         Função que insere um Fretado na Coleção de Fretados
     """
     try:
-        response = _get_collection().insert_one(deepcopy(item))
+        response = _get_collection().insert_one(item)
         if response:
             return response
     except Exception as e:
