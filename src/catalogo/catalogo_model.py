@@ -92,3 +92,31 @@ def _get_collection():
     except Exception as e:
         raise e
 
+class CatalogoDisciplina:
+    def __init__(self, sigla, disciplina, TPI, recomendacoes, objetivos, ementa, apelido) -> None:
+        self.sigla = sigla
+        self.disciplina = disciplina
+        self.TPI = TPI
+        self.recomendacoes = recomendacoes
+        self.objetivos = objetivos
+        self.ementa = ementa
+        self.apelido = apelido
+
+    def __str__(self) -> str:
+        return "Sigla: {}\nDisciplina: {}\nTPI: {}\nrecomendacoes: {}\nobjetivos: {}\nementa: {}\napelido: {}\n".format(
+            self.sigla,
+            self.disciplina,
+            self.TPI,
+            self.recomendacoes,
+            self.objetivos,
+            self.ementa,
+            self.apelido,
+        )
+
+    def to_dict(self) -> dict:
+        return self.__dict__
+
+    def from_dict(dictionary):
+        del dictionary['_id']
+
+        return Fretado(**dictionary)

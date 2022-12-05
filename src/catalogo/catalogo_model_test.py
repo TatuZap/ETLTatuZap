@@ -1,6 +1,7 @@
 import unittest
-from src.catalogo.catalogo_model import populate_database, list_all, find_by_apelido, find_by_sigla, insert_item, insert_items, delete_all
+from src.catalogo.catalogo_model import populate_database, list_all, find_by_apelido, find_by_sigla, insert_item, insert_items, delete_all, CatalogoDisciplina
 import json
+from copy import deepcopy
 
 class TestCatalogoModel(unittest.TestCase):
   """
@@ -41,17 +42,10 @@ class TestCatalogoModel(unittest.TestCase):
     """
         A função de inserção de um único elemento não deve retornar erros.
     """
-    disciplina = {
-        "sigla": "Sigla teste",
-        "disciplina": "Disciplina teste",
-        "TPI": "TPI teste",
-        "recomendacoes": "Recomendações teste",
-        "objetivos": "Objetivos teste",
-        "ementa":"Ementa teste",
-        "apelido": "Apelido teste"
-    }
+    disciplina = CatalogoDisciplina('Sigla teste', 'Disciplina teste', 'TPI teste', "Recomendações teste", "Objetivos teste", "Ementa teste", "Apelido teste")
+    
     try:
-        insert_item(json.loads(json.dumps(disciplina)))
+        insert_item(disciplina.to_dict())
     except Exception as e:
         self.fail("A inserção não deve retornar Erro")
 
@@ -59,19 +53,12 @@ class TestCatalogoModel(unittest.TestCase):
     """
         Um elemento inserido deve ser recuperável sem retornar erros.
     """
-    disciplina = {
-      "sigla": "Sigla teste",
-      "disciplina": "Disciplina teste",
-      "TPI": "TPI teste",
-      "recomendacoes": "Recomendações teste",
-      "objetivos": "Objetivos teste",
-      "ementa":"Ementa teste",
-      "apelido": "Apelido teste"
-    }
+    disciplina = CatalogoDisciplina('Sigla teste', 'Disciplina teste', 'TPI teste', "Recomendações teste", "Objetivos teste", "Ementa teste", "Apelido teste")
+
     try:
-      insert_item(json.loads(json.dumps(disciplina)))
-      find_by_sigla(disciplina['sigla'])
-      find_by_apelido(disciplina['apelido'])
+      insert_item(disciplina.to_dict())
+      find_by_sigla(disciplina.sigla)
+      find_by_apelido(disciplina.apelido)
     except Exception as e:
       self.fail("Um elemento inserido deve ser recuperado sem erro")
 
@@ -81,24 +68,18 @@ class TestCatalogoModel(unittest.TestCase):
         Um elemento inserido deve ser recuperado.
     """
 
-    disciplina = {
-      "sigla": "Sigla teste",
-      "disciplina": "Disciplina teste",
-      "TPI": "TPI teste",
-      "recomendacoes": "Recomendações teste",
-      "objetivos": "Objetivos teste",
-      "ementa":"Ementa teste",
-      "apelido": "Apelido teste"
-    }
+    disciplina = CatalogoDisciplina('Sigla teste', 'Disciplina teste', 'TPI teste', "Recomendações teste", "Objetivos teste", "Ementa teste", "Apelido teste")
 
-    insert_item(json.loads(json.dumps(disciplina)))
-    searched_class = find_by_sigla(disciplina['sigla'])
+    insert_item(deepcopy(disciplina.to_dict()))
+    searched_class = find_by_sigla(disciplina.sigla)
 
     class_retrieved = list(searched_class)[0]
-    del class_retrieved["_id"] # deleta o atributo "_id" que vem do banco de dados e não usamos para nada
+
+    del class_retrieved["_id"] # deleta o atributo "_id" que vem do banco de dados
+    
     self.assertEqual(
-      sorted(json.loads(json.dumps(class_retrieved)).items()),
-      sorted(json.loads(json.dumps(disciplina)).items()),
+      sorted(disciplina.to_dict().items()),
+      sorted(class_retrieved.items()),
       "O elemento inserido deve ser igual ao recuperado",
     )
 
@@ -106,29 +87,13 @@ class TestCatalogoModel(unittest.TestCase):
     """
         A função de inserção de multiplos elementos não deve retornar erros.
     """
-    disciplina_1 = {
-      "sigla": "Sigla teste 1",
-      "disciplina": "Disciplina teste 1",
-      "TPI": "TPI teste 1",
-      "recomendacoes": "Recomendações teste 1",
-      "objetivos": "Objetivos teste 1",
-      "ementa":"Ementa teste 1",
-      "apelido": "Apelido teste 1"
-    }
-    disciplina_2 = {
-      "sigla": "Sigla teste 2",
-      "disciplina": "Disciplina teste 2",
-      "TPI": "TPI teste 2",
-      "recomendacoes": "Recomendações teste 2",
-      "objetivos": "Objetivos teste 2",
-      "ementa":"Ementa teste 2",
-      "apelido": "Apelido teste 2"
-    }
 
-    disciplinas = [ json.loads(json.dumps(disciplina)) for disciplina in [disciplina_1, disciplina_2] ]
+    disciplinaA = CatalogoDisciplina('Sigla teste A', 'Disciplina teste A', 'TPI teste A', "Recomendações teste A", "Objetivos teste A", "Ementa teste A", "Apelido teste A")
+
+    disciplinaB = CatalogoDisciplina('Sigla teste B', 'Disciplina teste B', 'TPI teste B', "Recomendações teste B", "Objetivos teste B", "Ementa teste B", "Apelido teste B")
 
     try:
-      insert_items(disciplinas)
+      insert_items([disciplinaA.to_dict(), disciplinaB.to_dict()])
     except Exception as e:
       self.fail("A inserção de multiplos elementos não deve retornar Erro")
 
