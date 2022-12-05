@@ -1,8 +1,9 @@
 import unittest
-from src.restaurante.restaurante_model import list_all, insert_item, find_by_weekday_str, insert_items
+from src.restaurante.restaurante_model import list_all, insert_item, find_by_weekday_str, insert_items, RestauranteCardapio
 import json
+from copy import deepcopy
 
-class TestFretadoModel(unittest.TestCase):
+class TestRestauranteModel(unittest.TestCase):
     """
         Todos os casos de testes devem ser escritos como funções
         que começam com test.
@@ -19,15 +20,10 @@ class TestFretadoModel(unittest.TestCase):
         """
             A função de inserção de um único elemento não deve retornar erros.
         """
-        sunday_menu = {
-            "data": "26/11",
-            "dia_semana": 6,
-            "almoço": "prato principal: pizza",
-            "jantar": "picanha",
-            "saladas": "de batata com cenoura",
-            "sobremesas": "Gelatina"}
+        cardapio_domingo = RestauranteCardapio("26/11", "prato principal: pizza", "picanha", "de batata com cenoura", "Gelatina")
+
         try:
-            insert_item(json.loads(json.dumps(sunday_menu)))
+            insert_item(cardapio_domingo.to_dict())
         except Exception as e:
             print(e)
             self.fail("A inserção não deve retornar Erro")
@@ -36,15 +32,12 @@ class TestFretadoModel(unittest.TestCase):
         """
             Um elemento inserido deve ser recuperável sem retornar erros.
         """
-        sunday_menu = {'data': '26/11',
-            'dia_semana': 6,
-            'almoço': 'RAviole',
-            'jantar': 'picanha',
-            'saladas': 'de batata com cenoura',
-            'sobremesas': 'Gelatina'}
+
+        cardapio_domingo = RestauranteCardapio("26/11", "prato principal: pizza", "picanha", "de batata com cenoura", "Gelatina")
+        
         try:
-            insert_item(json.loads(json.dumps(sunday_menu)))
-            find_by_weekday_str(sunday_menu["data"],0)
+            insert_item(deepcopy(cardapio_domingo.to_dict()))
+            find_by_weekday_str(cardapio_domingo.data,0)
             #self.assertGreater(len(list(response_find)), 0, "Ao inserir um elemento, este deve estar no banco.")
         except Exception as e:
             self.fail("Um elemento inserido deve ser recuperado sem erro")
@@ -54,38 +47,24 @@ class TestFretadoModel(unittest.TestCase):
         """
             Um elemento inserido deve ser recuperado.
         """
-        sunday_menu = {'data': '30/11',
-            'dia_semana': 2,
-            'almoço': 'Parmeggiana',
-            'jantar': 'Hamburguer',
-            'saladas': 'de batata com cenoura',
-            'sobremesas': 'Gelatina'}
 
-        insert_item(json.loads(json.dumps(sunday_menu)))
-        response = find_by_weekday_str(sunday_menu["data"],0)
+        cardapio_domingo = RestauranteCardapio('30/11', 'Parmeggiana', 'Hamburguer', "de batata com cenoura", "Gelatina")
+
+        insert_item(deepcopy(cardapio_domingo.to_dict()))
+        response = find_by_weekday_str(cardapio_domingo.data,0)
         menu_retrieved = list(response)[0]
         del menu_retrieved["_id"] # deleta o atributo "_id" que vem do banco de dados e não usamos para nada
-        self.assertEqual(sorted(json.loads(json.dumps(sunday_menu)).items()), sorted(json.loads(json.dumps(menu_retrieved)).items()), "O elemento inserido deve ser igual ao recuperado")
+        self.assertEqual(sorted(cardapio_domingo.to_dict().items()), sorted(menu_retrieved.items()), "O elemento inserido deve ser igual ao recuperado")
 
     def test_insert_items_inserts(self):
         """
             A função de inserção de multiplos elementos não deve retornar erros.
         """
-        saturday_menu = {'data': '04/12',
-            'dia_semana': 2,
-            'almoço': 'Nada',
-            'jantar': 'Vento',
-            'saladas': 'de batata com cenoura',
-            'sobremesas': 'Gelatina'}
-        sunday_menu = {'data': '05/12',
-            'dia_semana': 2,
-            'almoço': 'Hot dog',
-            'jantar': 'Macarronada',
-            'saladas': 'de batata com cenoura',
-            'sobremesas': 'Gelatina'}
-        menus = [ json.loads(json.dumps(menus)) for menus in [saturday_menu,sunday_menu]]
+        cardapio_sabado = RestauranteCardapio('04/12', 'Nada', 'Vento', 'de batata com cenoura', 'Gelatina')
+        cardapio_domingo = RestauranteCardapio('05/12', 'Hot dog', 'Macarronada', 'de batata com cenoura', 'Gelatina')
+
         try:
-            response = insert_items(menus)
+            response = insert_items([cardapio_sabado.to_dict(), cardapio_domingo.to_dict()])
         except Exception as e:
             self.fail("A inserção de multiplos elementos não deve retornar Erro")
 

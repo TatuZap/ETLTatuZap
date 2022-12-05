@@ -119,4 +119,4 @@ class CatalogoDisciplina:
     def from_dict(dictionary):
         del dictionary['_id']
 
-        return Fretado(**dictionary)
+        return CatalogoDisciplina(**dictionary)
