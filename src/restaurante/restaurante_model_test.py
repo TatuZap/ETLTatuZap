@@ -1,7 +1,6 @@
 import unittest
-import restaurante_model
-import json 
-
+from src.restaurante.restaurante_model import list_all, insert_item, find_by_weekday_str, insert_items
+import json
 
 class TestFretadoModel(unittest.TestCase):
     """
@@ -12,8 +11,8 @@ class TestFretadoModel(unittest.TestCase):
         """
             O list_all após população deve retornar ao menos 1 elemento
         """
-        #restaurante_model.populate_database() # garante que o database foi populado
-        menus = restaurante_model.list_all() # lista todos
+        #populate_database() # garante que o database foi populado
+        menus = list_all() # lista todos
         self.assertGreater(len(list(menus)), 0,"A lista deve ser não nula")
 
     def test_insert_item_inserts(self):
@@ -28,11 +27,11 @@ class TestFretadoModel(unittest.TestCase):
             "saladas": "de batata com cenoura",
             "sobremesas": "Gelatina"}
         try:
-            restaurante_model.insert_item(json.loads(json.dumps(sunday_menu)))
+            insert_item(json.loads(json.dumps(sunday_menu)))
         except Exception as e:
             print(e)
             self.fail("A inserção não deve retornar Erro")
-    
+
     def test_insert_item_find(self):
         """
             Um elemento inserido deve ser recuperável sem retornar erros.
@@ -44,8 +43,8 @@ class TestFretadoModel(unittest.TestCase):
             'saladas': 'de batata com cenoura',
             'sobremesas': 'Gelatina'}
         try:
-            restaurante_model.insert_item(json.loads(json.dumps(sunday_menu)))
-            restaurante_model.find_by_weekday_str(sunday_menu["data"],0)
+            insert_item(json.loads(json.dumps(sunday_menu)))
+            find_by_weekday_str(sunday_menu["data"],0)
             #self.assertGreater(len(list(response_find)), 0, "Ao inserir um elemento, este deve estar no banco.")
         except Exception as e:
             self.fail("Um elemento inserido deve ser recuperado sem erro")
@@ -62,8 +61,8 @@ class TestFretadoModel(unittest.TestCase):
             'saladas': 'de batata com cenoura',
             'sobremesas': 'Gelatina'}
 
-        restaurante_model.insert_item(json.loads(json.dumps(sunday_menu)))
-        response = restaurante_model.find_by_weekday_str(sunday_menu["data"],0)
+        insert_item(json.loads(json.dumps(sunday_menu)))
+        response = find_by_weekday_str(sunday_menu["data"],0)
         menu_retrieved = list(response)[0]
         del menu_retrieved["_id"] # deleta o atributo "_id" que vem do banco de dados e não usamos para nada
         self.assertEqual(sorted(json.loads(json.dumps(sunday_menu)).items()), sorted(json.loads(json.dumps(menu_retrieved)).items()), "O elemento inserido deve ser igual ao recuperado")
@@ -86,7 +85,7 @@ class TestFretadoModel(unittest.TestCase):
             'sobremesas': 'Gelatina'}
         menus = [ json.loads(json.dumps(menus)) for menus in [saturday_menu,sunday_menu]]
         try:
-            response = restaurante_model.insert_items(menus)
+            response = insert_items(menus)
         except Exception as e:
             self.fail("A inserção de multiplos elementos não deve retornar Erro")
 

@@ -8,41 +8,31 @@ O MVP do TatuZap consiste de dois repositórios, o ETLTatuZap, reponsável por c
 
 ## ETLTatuZap
 
-Os códigos presentes nesse repositório são relativos ao processo de Extração, Transformação e Carregamento (LOAD), também conhecido como *ETL*, toda essa etapa tem como objetivo alimentar o banco de dados a ser utilizado em nosso chatbot (https://github.com/TatuZap/BotTatuZap) para responder queries de usuários.
+Os códigos presentes nesse repositório são relativos ao processo de Extração, Transformação e Carregamento (LOAD), também conhecido como _ETL_, toda essa etapa tem como objetivo alimentar o banco de dados a ser utilizado em nosso chatbot (https://github.com/TatuZap/BotTatuZap) para responder queries de usuários.
 
 Dentro do ETLTatuZap, pretendemos utilizar as seguintes tecnologias:
 
-* Python(3.9)
+- Python(3.9)
 
-* Pandas
+- Pandas
 
-* MongoDB
+- MongoDB
 
-* FastAPI
+- FastAPI
 
-## Instruções
+<hr />
+
+## Instruções de instalação
+
 Passo a passo para rodar o projeto.
 
+### Clonando o repositório:
 
-### Pré-requisitos
 - Clone o repositório do Tatuzap ETL
+
 ```sh
 git clone git@github.com:TatuZap/ETLTatuZap.git
 ```
-
-- Instale a biblioteca Pandas para auxiliar na manipulação de dados
-```sh
-# PyPI
-pip install pandas
-```
-
-- Instale esta biblioteca para que seja possível ler e escrever arquivos Excel usando um código fácil
-```sh
-# PyPI
-pip install openpyxl
-```
-
-## Executando localmente
 
 ### Instalando python:
 
@@ -50,13 +40,12 @@ pip install openpyxl
 
 - Linux: sudo apt-get install python3
 
-### Instalando PIP 
+### Instalando PIP
 
 - Windows: curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-         python get-pip.py
-         
+  python get-pip.py
 - Linux: sudo apt install python3-pip
-Conferindo a instalação: pip3 --version
+  Conferindo a instalação: pip3 --version
 
 ### Instalando virtualenv
 
@@ -68,7 +57,7 @@ Conferindo a instalação: pip3 --version
 
 #### Ativando ambiente virtual
 
-- Windows: No CMD venv\Scripts\Activate 
+- Windows: No CMD venv\Scripts\Activate
 
 - Linux: source venv/bin/activate
 
@@ -76,7 +65,61 @@ Conferindo a instalação: pip3 --version
 
 - pip install -r requirements.txt
 
-### Executando
+<hr />
 
-- python src/main.py
+## Instruções de execução
 
+### Funcionalidade de catalogo
+
+- Rodar o comando `python3`
+- Rodar o comando `import src.catalogo.catalogo_model as catalogo_model`
+- Rodar o comando `catalogo_model.populate_database()` para raspar os dados e popular o banco
+- Rodar o comando `list(catalogo_model.list_all())` por exemplo
+
+### Funcionalidade de fretados
+
+- Rodar o comando `python3`
+- Rodar o comando `import src.fretados.fretados_model as fretados_model`
+- Rodar o comando `fretados_model.populate_database()` para raspar os dados e popular o banco
+- Rodar o comando `list(fretados_model.list_all())` por exemplo
+
+### Funcionalidade de restaurante
+
+- Rodar o comando `python3`
+- Rodar o comando `import src.restaurante.restaurante_model as restaurante_model`
+- Rodar o comando `restaurante_model.populate_database()` para raspar os dados e popular o banco
+- Rodar o comando `list(restaurante_model.list_all())` por exemplo
+
+### Funcionalidade de turmas
+
+- Essa funcionalidade esta em refatoração, ainda não há instrucoes claras para rodar
+
+### Funcionalidade de usuario
+
+- Rodar o comando `python3`
+- Rodar o comando `import src.usuario.usuario_model as usuario_model`
+- Rodar o comando `list(usuario_model.list_all())` por exemplo
+
+<hr />
+
+## Instruções de testes automatizados
+
+### Funcionalidade de catalogo
+
+- Rodar o comando `python3 -m src.catalogo.catalogo_model_test`
+
+### Funcionalidade de fretados
+
+- Rodar o comando `python3 -m src.fretados.fretados_model_test`
+
+### Funcionalidade de restaurante
+
+- Rodar o comando `python3 -m src.restaurante.restaurante_model_test`
+
+### Funcionalidade de turmas
+
+- Ainda não há testes para essa funcionalidade
+
+### Funcionalidade de usuario
+
+- Ainda não há testes para essa funcionalidade

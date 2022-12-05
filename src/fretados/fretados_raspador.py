@@ -1,5 +1,6 @@
 import requests
 import pandas as pd
+
 BUS_URL = "https://pu.ufabc.edu.br/horarios-dos-onibus"
 BUS_PAGE = requests.get(BUS_URL).content
 tables_on_page = pd.read_html(BUS_PAGE)

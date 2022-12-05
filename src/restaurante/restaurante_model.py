@@ -1,8 +1,6 @@
 import json
-import raspador_restaurante
-import pandas as pd 
-from database import get_db, DBCollections
-from raspador_restaurante import tables_on_page, clean_restaurant_df
+import src.restaurante.restaurante_raspador as restaurante_raspador
+from ..database import get_db, DBCollections
 
 def list_all():
     """
@@ -13,7 +11,7 @@ def list_all():
         if response.explain()["executionStats"]["executionSuccess"]: # Procura nos Status se a operação deu Certo
             return response
     except Exception as e:
-        raise e 
+        raise e
 
 def insert_item(item):
     """
@@ -29,19 +27,19 @@ def insert_item(item):
 def find_by_weekday_str(data, complete_info=0):
     """
         Função que retorna informações acerca do almoço ou janta do RU
-        Args: 
+        Args:
         data em forma de string dia/mes
-        complete_info é um inteiro que possui valores entre 0 e 2 
+        complete_info é um inteiro que possui valores entre 0 e 2
         0 -> Almoço e janta
-        1 -> Somente Almoço 
-        2 -> Somente Janta 
+        1 -> Somente Almoço
+        2 -> Somente Janta
     """
     try:
         if complete_info == 0 :
             response = _get_collection().find({ "data": data })
         elif complete_info == 1:
             response = _get_collection().find({ "data": data }, {"jantar" : 0})
-        else: 
+        else:
             response = _get_collection().find({ "data": data }, {"almoço" : 0})
         if response:
             return response
@@ -51,19 +49,19 @@ def find_by_weekday_str(data, complete_info=0):
 def find_by_weekday_num(dia_semana, complete_info=0):
     """
         Função que retorna informações acerca do almoço ou janta do RU
-        Args: 
+        Args:
         dia_semana é um numero de 0  a 6 (segunda a domingo)
-        complete_info é um inteiro que possui valores entre 0 e 2 
+        complete_info é um inteiro que possui valores entre 0 e 2
         0 -> Almoço e janta
-        1 -> Somente Almoço 
-        2 -> Somente Janta 
+        1 -> Somente Almoço
+        2 -> Somente Janta
     """
     try:
         if complete_info == 0 :
             response = _get_collection().find({ "dia_semana": dia_semana })
         elif complete_info == 1:
             response = _get_collection().find({ "dia_semana": dia_semana }, {"jantar" : 0})
-        else: 
+        else:
             response = _get_collection().find({ "dia_semana": dia_semana }, {"almoço" : 0 })
         if response:
             return response
@@ -99,7 +97,7 @@ def populate_database():
     delete_all()
 
     # get dataframe
-    parsed_dataframe = raspador_restaurante.clean_restaurant_df(raspador_restaurante.tables_on_page)
+    parsed_dataframe = restaurante_raspador.clean_restaurant_df(restaurante_raspador.tables_on_page)
 
     # preparando as tabelas para inseri-las elemento a elemento no banco
     Restaurante_json = json.loads(parsed_dataframe.to_json(orient='records'))
@@ -116,8 +114,3 @@ def _get_collection():
         return get_db.get_collection(DBCollections.RESTAURANTE)
     except Exception as e:
         raise e
-
-
-
-
-
