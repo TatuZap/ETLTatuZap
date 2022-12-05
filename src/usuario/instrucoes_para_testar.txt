@@ -1,1 +1,1 @@
-- Ainda não há testes para essa funcionalidade
+- Roda o comando `python3 -m src.usuario.usuario_model_test`

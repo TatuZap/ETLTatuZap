@@ -1,7 +1,6 @@
 import unittest
-from src.restaurante.restaurante_model import list_all, insert_item, find_by_weekday_str, insert_items, RestauranteCardapio
-import json
 from copy import deepcopy
+from src.restaurante.restaurante_model import list_all, insert_item, find_by_weekday_str, insert_items, RestauranteCardapio
 
 class TestRestauranteModel(unittest.TestCase):
     """
@@ -34,7 +33,7 @@ class TestRestauranteModel(unittest.TestCase):
         """
 
         cardapio_domingo = RestauranteCardapio("26/11", "prato principal: pizza", "picanha", "de batata com cenoura", "Gelatina")
-        
+
         try:
             insert_item(deepcopy(cardapio_domingo.to_dict()))
             find_by_weekday_str(cardapio_domingo.data,0)

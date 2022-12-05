@@ -1,7 +1,6 @@
 import unittest
-from src.catalogo.catalogo_model import populate_database, list_all, find_by_apelido, find_by_sigla, insert_item, insert_items, delete_all, CatalogoDisciplina
-import json
 from copy import deepcopy
+from src.catalogo.catalogo_model import populate_database, list_all, find_by_apelido, find_by_sigla, insert_item, insert_items, delete_all, CatalogoDisciplina
 
 class TestCatalogoModel(unittest.TestCase):
   """

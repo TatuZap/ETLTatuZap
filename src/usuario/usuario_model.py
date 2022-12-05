@@ -83,9 +83,9 @@ class Usuario:
         Um usuário possui um identificador único e possivelmente um RA.
     """
 
-    def __init__(self, ra=None, id) -> None:
-        self.ra = ra
+    def __init__(self, id, ra=None) -> None:
         self.id = id
+        self.ra = ra
 
     def __str__(self) -> str:
         return "Ra: {}\nId: {}\n".format(
