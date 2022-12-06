@@ -1,3 +1,4 @@
+from copy import deepcopy
 import unittest
 from src.fretados.fretados_model import Fretado, list_all, insert_item, find_by_all_fields, populate_database, find_by_linha, insert_items
 
@@ -35,7 +36,7 @@ class TestFretadoModel(unittest.TestCase):
         bus = Fretado(-1, "SEMANA", "SA", "07:07", "SBC", "07:17", 'N/A')
 
         try:
-            insert_item(bus.to_dict())
+            insert_item(deepcopy(bus.to_dict()))
 
             find_by_all_fields(**(bus.to_dict()))
         except Exception as e:
@@ -48,7 +49,7 @@ class TestFretadoModel(unittest.TestCase):
         """
         bus = Fretado(-1, "SEMANA", "SA", "07:07", "SBC", "07:17", 'N/A')
 
-        insert_item(bus.to_dict())
+        insert_item(deepcopy(bus.to_dict()))
 
         response = find_by_all_fields(**(bus.to_dict()))
 
