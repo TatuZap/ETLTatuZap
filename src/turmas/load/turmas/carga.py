@@ -20,4 +20,3 @@ def load_one(get_db,data,collection_name):
         print("successful data loading")
     except Exception as error:
         raise error
-    

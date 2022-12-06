@@ -47,6 +47,7 @@ def tratamento_turma_por_ra(ajuste,reajuste,turmas,RA):
 
         turmas_por_RA.append(aluno)
     return turmas_por_RA
+
 sep = '\\' if os.name == 'nt' else '/'
 def save_json(data):
     path=os.path.realpath('./src/transform/turmas') + sep + "turma_por_ra.json"
