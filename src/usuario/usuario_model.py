@@ -86,11 +86,23 @@ def _get_collection():
 
 class Usuario:
     """
-        Um usuário possui um identificar único e possivelmente um RA.
+        Um usuário possui um identificador único e possivelmente um RA.
     """
+
     def __init__(self, id, ra=None) -> None:
         self.id = id
         self.ra = ra
 
     def __str__(self) -> str:
-        return "Usuário: {}".format(self.id)
+        return "Ra: {}\nId: {}\n".format(
+            self.ra,
+            self.id,
+        )
+
+    def to_dict(self) -> dict:
+        return self.__dict__
+
+    def from_dict(dictionary):
+        del dictionary['_id']
+
+        return Usuario(**dictionary)

@@ -114,3 +114,28 @@ def _get_collection():
         return get_db.get_collection(DBCollections.RESTAURANTE)
     except Exception as e:
         raise e
+
+class RestauranteCardapio:
+    def __init__(self, data, almoço, jantar, saladas, sobremesas) -> None:
+        self.data = data
+        self.almoço = almoço
+        self.jantar = jantar
+        self.saladas = saladas
+        self.sobremesas = sobremesas
+
+    def __str__(self) -> str:
+        return "Data: {}\nAlmoço: {}\nJantar: {}\nSaladas: {}\nSobremesas: {}\n".format(
+            self.data,
+            self.almoço,
+            self.jantar,
+            self.saladas,
+            self.sobremesas,
+        )
+
+    def to_dict(self) -> dict:
+        return self.__dict__
+
+    def from_dict(dictionary):
+        del dictionary['_id']
+
+        return RestauranteCardapio(**dictionary)

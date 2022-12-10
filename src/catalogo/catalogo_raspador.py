@@ -5,6 +5,8 @@ import pandas as pd
 import numpy as np
 from nltk.corpus import stopwords
 
+nltk.download('stopwords')
+
 STOPWORDS = stopwords.words('portuguese')
 CATALOGO_URL = "https://prograd.ufabc.edu.br/pdf/catalogo_disciplinas_graduacao_2021_2022.xlsx"
 CATALOGO_XLSX  = requests.get(CATALOGO_URL).content
@@ -15,4 +17,5 @@ def clean_catalogo_df(df):
     df = df.replace(np.nan,"")
     df["apelido"] = df["disciplina"].apply(lambda x: "".join([ w[0] for w in x.lower().split() if w not in STOPWORDS]))
     df["disciplina"] = df["disciplina"].apply(lambda x: unidecode.unidecode(x))
+
     return df

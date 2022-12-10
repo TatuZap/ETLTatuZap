@@ -122,4 +122,4 @@ git clone git@github.com:TatuZap/ETLTatuZap.git
 
 ### Funcionalidade de usuario
 
-- Ainda não há testes para essa funcionalidade
+- Rodar o comando `python3 -m src.restaurante.restaurante_model_test`
