@@ -57,6 +57,12 @@ def insert_items(items):
     except Exception as e:
         raise e
 
+def create_user(ra,id):
+    try:
+        insert_item({"ra":ra, "id":id})
+    except Exception as e:
+        raise e
+
 def delete_all():
     """
         Função que remove todas as entradas da Coleção de usuário
