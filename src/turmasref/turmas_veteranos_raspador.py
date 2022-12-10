@@ -10,12 +10,9 @@ df = pd.read_excel(TURMAS_SALAS_HORARIOS,sheet_name="AJUSTE_2022.3")
 
 def clean_turmas_salas_horarios_df(df):
     # Realocando as colunas do Dataframe
-    
     df.columns = df.iloc[0]
     df.drop(index=df.index[0], axis=0, inplace=True)
-    
     # Limpeza dos elementos que são nulos
-    
     for column in df.columns:
-        df[column] = df[column].fillna(0)  
+        df[column] = df[column].fillna(0)
     return df

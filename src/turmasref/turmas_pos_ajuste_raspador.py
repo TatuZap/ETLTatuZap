@@ -7,7 +7,7 @@ TURMAS_POS_AJUSTE = requests.get(TURMAS_POS_AJUSTE_URL).content
 with open("turmas_pos_ajuste.pdf","wb") as turmas_pos_ajuste:
     turmas_pos_ajuste.write(TURMAS_POS_AJUSTE)
 
-tables_on_page = read_pdf("turmas_pos_ajuste.pdf",pages="all",lattice=True, guess=False,pandas_options={'header': None})
+df = read_pdf("turmas_pos_ajuste.pdf",pages="all",lattice=True, guess=False,pandas_options={'header': None})
 
 def clean_turmas_pos_ajuste_df(df):
     """
