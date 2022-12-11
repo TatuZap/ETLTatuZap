@@ -42,7 +42,7 @@ class TestCatalogoModel(unittest.TestCase):
         A função de inserção de um único elemento não deve retornar erros.
     """
     disciplina = CatalogoDisciplina('Sigla teste', 'Disciplina teste', 'TPI teste', "Recomendações teste", "Objetivos teste", "Ementa teste", "Apelido teste")
-    
+
     try:
         insert_item(disciplina.to_dict())
     except Exception as e:
@@ -75,7 +75,7 @@ class TestCatalogoModel(unittest.TestCase):
     class_retrieved = list(searched_class)[0]
 
     del class_retrieved["_id"] # deleta o atributo "_id" que vem do banco de dados
-    
+
     self.assertEqual(
       sorted(disciplina.to_dict().items()),
       sorted(class_retrieved.items()),
@@ -120,3 +120,4 @@ class TestCatalogoModel(unittest.TestCase):
 
 if __name__ == '__main__':
   unittest.main()
+  
