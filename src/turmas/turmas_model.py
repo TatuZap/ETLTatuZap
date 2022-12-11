@@ -1,10 +1,8 @@
 import src.turmas.turmas_ingressantes_raspador as turmas_ingressantes_raspador
 import src.turmas.turmas_veteranos_raspador as turmas_veteranos_raspador
-import src.turmas.turmas_pos_reajuste as turmas_pos_ajuste
-import src.turmas.turmas_pos_ajuste_raspador as turmas_pos_reajuste_raspador
+import src.turmas.turmas_pos_reajuste_raspador as turmas_pos_reajsute_raspador
+import src.turmas.turmas_pos_ajuste_raspador as turmas_pos_ajuste_raspador
 from ..database import get_db, DBCollections
-from copy import deepcopy
-
 
 def insert_items_SALAS_HORARIOS(items):
     """
@@ -45,19 +43,23 @@ def populate_database():
     # deleta o conteúdo atual do banco
     delete_all()
 
+    print('Populando turmas, salas e horarios do quadrimestre...')
     parsed_dataframe = turmas_veteranos_raspador.clean_turmas_salas_horarios_df(turmas_veteranos_raspador.df)
     turmas_dicts = parsed_dataframe.to_dict('records')
     insert_items_SALAS_HORARIOS(turmas_dicts)
 
+    print('Populando turmas, salas e horarios de ingressantes...')
     parsed_dataframe = turmas_ingressantes_raspador.clean_turmas_ingressantes_df(turmas_ingressantes_raspador.df)
     turmas_dicts = parsed_dataframe.to_dict('records')
     insert_items_RA_TURMAS(turmas_dicts)
 
-    parsed_dataframe = turmas_pos_ajuste.clean_turmas_pos_ajuste_df(turmas_pos_ajuste.df)
+    print('Populando turmas de alunos pos ajuste...')
+    parsed_dataframe = turmas_pos_ajuste_raspador.clean_turmas_pos_ajuste_df(turmas_pos_ajuste_raspador.df)
     turmas_dicts = parsed_dataframe.to_dict('records')
     insert_items_RA_TURMAS(turmas_dicts)
 
-    parsed_dataframe = turmas_pos_reajuste_raspador.clean_turmas_pos_ajuste_df(turmas_pos_reajuste_raspador.df)
+    print('Populando turmas de alunos pos reajuste...')
+    parsed_dataframe = turmas_pos_reajsute_raspador.clean_turmas_pos_reajuste_df(turmas_pos_reajsute_raspador.df)
     turmas_dicts = parsed_dataframe.to_dict('records')
     insert_items_RA_TURMAS(turmas_dicts)
 

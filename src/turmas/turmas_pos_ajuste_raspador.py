@@ -1,6 +1,7 @@
 import requests # requisições http
 import pandas as pd
 from tabula import read_pdf
+
 TURMAS_POS_AJUSTE_URL = "https://prograd.ufabc.edu.br/pdf/matriculas_deferidas_pos_ajuste_2022.3.pdf"
 TURMAS_POS_AJUSTE = requests.get(TURMAS_POS_AJUSTE_URL).content
 

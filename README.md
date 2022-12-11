@@ -92,13 +92,20 @@ git clone git@github.com:TatuZap/ETLTatuZap.git
 
 ### Funcionalidade de turmas
 
-- Essa funcionalidade esta em refatoração, ainda não há instrucoes claras para rodar
+- Rodar o comando `python3`
+- Rodar o comando `import src.turmas.turmas_model as turmas_model`
+- Rodar o comando `turmas_model.populate_database()` para raspar os dados e popular o banco
+- Rodar o comando `list(turmas_model.find_turmas_by_ra('11201810247'))` por exemplo
 
 ### Funcionalidade de usuario
 
 - Rodar o comando `python3`
 - Rodar o comando `import src.usuario.usuario_model as usuario_model`
 - Rodar o comando `list(usuario_model.list_all())` por exemplo
+
+### Funcionalidade de calendario
+
+- Feature em desenvolvimento, ainda não há instruções definidas para rodar
 
 <hr />
 
@@ -123,3 +130,7 @@ git clone git@github.com:TatuZap/ETLTatuZap.git
 ### Funcionalidade de usuario
 
 - Rodar o comando `python3 -m src.restaurante.restaurante_model_test`
+
+### Funcionalidade de calendario
+
+- Ainda não há testes para essa funcionalidade

@@ -1,6 +1,5 @@
 from requests import get
 import pandas as pd
-import unidecode
 
 TURMAS_SALAS_HORARIOS_URL = "https://prograd.ufabc.edu.br/pdf/ajuste_2022_3_turmas.xlsx"
 TURMAS_SALAS_HORARIOS = get(TURMAS_SALAS_HORARIOS_URL).content
