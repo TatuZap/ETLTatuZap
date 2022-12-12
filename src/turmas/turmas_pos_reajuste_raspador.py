@@ -1,6 +1,7 @@
 import requests # requisições http
 import pandas as pd
 from tabula import read_pdf
+
 TURMAS_POS_REAJUSTE_URL = "https://prograd.ufabc.edu.br/pdf/reajuste_2022_3_matriculas_deferidas.pdf"
 TURMAS_POS_REAJUSTE = requests.get(TURMAS_POS_REAJUSTE_URL).content
 
@@ -9,9 +10,9 @@ with open("turmas_pos_reajuste.pdf","wb") as turmas_pos_ajuste:
 
 df = read_pdf("turmas_pos_reajuste.pdf",pages="all",pandas_options={'header': None})
 
-def clean_turmas_pos_ajuste_df(df):
+def clean_turmas_pos_reajuste_df(df):
     """
-        Função que retorna a relação de turmas pos ajuste
+        Função que retorna a relação de turmas pos reajuste
     """
     # A Limpeza da Primeira página é especial e consiste em:
 
@@ -38,5 +39,3 @@ def clean_turmas_pos_ajuste_df(df):
     # Limpe as colunas desnecessárias
     df.drop(["TURMAS2","TURNO","CAMPUS","DISCIPLINA"], axis=1,inplace=True)
     return df
-
-
