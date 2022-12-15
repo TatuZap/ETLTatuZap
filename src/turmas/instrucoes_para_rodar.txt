@@ -1,4 +1,0 @@
-- Rodar o comando `python3`
-- Rodar o comando `import src.turmas.turmas_model as turmas_model`
-- Rodar o comando `turmas_model.populate_database()` para raspar os dados e popular o banco
-- Rodar o comando `list(turmas_model.find_turmas_by_ra('11201810247'))` por exemplo

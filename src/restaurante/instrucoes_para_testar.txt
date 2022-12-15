@@ -1,1 +1,0 @@
-- Rodar o comando `python3 -m src.restaurante.restaurante_model_test`
