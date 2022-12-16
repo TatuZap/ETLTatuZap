@@ -1,6 +1,12 @@
 from src.fretados.fretados_raspador import tables_on_page, clean_bus_df
 from ..database import get_db, DBCollections
 
+def _helper_num_to_weekday(num):
+    if (num < 0 or num > 6): raise Exception("Dia da semana inválido")
+    elif (num < 5):          return "SEMANA"
+    elif (num == 5):         return "SABADO"
+    else:                    return "DOMINGO"
+
 def list_all():
     """
         Função que retorna todos os Fretados da coleção de Fretados
@@ -27,7 +33,7 @@ def next_bus(origem, destino, horario_solicitacao, horario_limite, dia_semana): 
     return _get_collection().find({
         "origem": origem,
         "destino": destino,
-        "dias" : "SEMANA" if dia_semana < 5 else "SABADO",
+        "dias" : _helper_num_to_weekday(dia_semana),
         "hora_partida" : {"$gte" : horario_solicitacao, "$lt": horario_limite}
     })
 
@@ -38,7 +44,7 @@ def find_by_linha(linha, dia_semana):
     try:
         response = _get_collection().find_one({
             "linha": linha,
-            "dias" : "SEMANA" if dia_semana < 5 else "SABADO"
+            "dias" : _helper_num_to_weekday(dia_semana)
         })
         if response:
             return response
@@ -128,7 +134,7 @@ class Fretado:
     """
     Classe que Modela o Objeto de negócio Fretado
     - linha:                      O número da linha de onibus, pode ter valores de 1 a 6
-    - dias:                       Pode ser de dois valores 'SEMANA' e 'SABADO'
+    - dias:                       Pode ser de dois valores 'SEMANA', 'SABADO' ou 'DOMINGO'
     - origem:                     Pode ser de dois valores 'SA' e 'SBC'
     - hora_partida:               Pode ser do valor de um horário, tipo '8:25' ou 'N/A' caso não tenha valor
     - destino:                    Pode ser de dois valores 'SA' e 'SBC'
