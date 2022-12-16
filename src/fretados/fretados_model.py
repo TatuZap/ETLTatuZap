@@ -12,7 +12,7 @@ def list_all():
     except Exception as e:
         raise e
 
-def next_bus(origem, destino, horario_solicitacao, horario_limite, dia_semana): # TODO
+def next_bus(origem, destino, horario_solicitacao, horario_limite, dia_semana, desembarque_terminal_leste=None):
     """
         Função que retorna os próximos Fretados baseada na origem, destino, horário_partida e intervalo.
     Args:
@@ -24,12 +24,47 @@ def next_bus(origem, destino, horario_solicitacao, horario_limite, dia_semana): 
         Cursor (tipo iterável) do pymongo com a resposta, que pode ser vazia.
     """
 
+    if (desembarque_terminal_leste != None):
+        return _get_collection().find({
+            "origem": origem,
+            "destino": destino,
+            "dias": "SEMANA" if dia_semana < 5 else "SABADO",
+            "hora_partida": {"$gte" : horario_solicitacao, "$lt": horario_limite},
+            "desembarque_terminal_leste": desembarque_terminal_leste
+        })
+
     return _get_collection().find({
         "origem": origem,
         "destino": destino,
         "dias" : "SEMANA" if dia_semana < 5 else "SABADO",
         "hora_partida" : {"$gte" : horario_solicitacao, "$lt": horario_limite}
     })
+
+def find_next_by_parada_em_terminal(horario_solicitacao, terminal):
+    if (terminal == 'TERMINAL-SBC'):
+        search_response = list(
+            _get_collection()
+                .find({
+                    "destino": "TERMINAL-SBC",
+                    "hora_partida": { "$gte" : horario_solicitacao },
+                })
+                .sort("hora_partida")
+        )
+    elif (terminal == 'TERMINAL-LESTE'):
+        search_response = list(
+            _get_collection()
+                .find({
+                    "hora_partida": { "$gte" : horario_solicitacao },
+                    "desembarque_terminal_leste": { "$gte" : horario_solicitacao }
+                })
+                .sort("desembarque_terminal_leste")
+        )
+    else:
+        raise Exception("Parâmetro terminal deve ser 'TERMINAL-SBC' ou 'TERMINAL-LESTE'")
+
+    if (len(search_response) == 0): return {}
+
+    return search_response[0]
 
 def find_by_linha(linha, dia_semana):
     """
@@ -127,13 +162,13 @@ def _get_collection():
 class Fretado:
     """
     Classe que Modela o Objeto de negócio Fretado
-    - linha:                      O número da linha de onibus, pode ter valores de 1 a 6
     - dias:                       Pode ser de dois valores 'SEMANA' e 'SABADO'
-    - origem:                     Pode ser de dois valores 'SA' e 'SBC'
+    - origem:                     Pode ser dos valores: 'SA' ou 'SBC' ou 'TERMINAL-SBC' (Obs.: não pode ser terminal leste pois é apenas desembarque, temos um campo especifico para isso)
+    - destino:                    Pode ser dos valores: 'SA' ou 'SBC' ou 'TERMINAL-SBC' (Obs.: não pode ser terminal leste pois é apenas desembarque, temos um campo especifico para isso)
     - hora_partida:               Pode ser do valor de um horário, tipo '8:25' ou 'N/A' caso não tenha valor
-    - destino:                    Pode ser de dois valores 'SA' e 'SBC'
     - hora_chegada:               Pode ser do valor de um horário, tipo '8:25' ou 'N/A' caso não tenha valor
     - desembarque_terminal_leste: Caso tenha desembarque no Terminal Leste é o valor de um horário, tipo '8:25', caso contrário, 'N/A'
+    - linha:                      O número da linha de onibus, pode ter valores de 1 a 6
     """
     def __init__(self, linha, dias, origem, hora_partida, destino, hora_chegada, desembarque_terminal_leste) -> None:
         self.dias = dias
