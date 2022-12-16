@@ -6,7 +6,7 @@ BUS_PAGE = requests.get(BUS_URL).content
 tables_on_page = pd.read_html(BUS_PAGE)
 
 # O Resultado desse método deve ser um dataframe único com 6 colunas:
-#   - dias:                       Pode ser de dois valores 'SEMANA' e 'SABADO'
+#   - dias:                       Pode ser de dois valores 'SEMANA', 'SABADO' OU 'DOMINGO'
 #   - origem:                     Pode ser dos valores: 'SA' ou 'SBC' ou 'TERMINAL-SBC' (Obs.: não pode ser terminal leste pois é apenas desembarque, temos um campo especifico para isso)
 #   - destino:                    Pode ser dos valores: 'SA' ou 'SBC' ou 'TERMINAL-SBC' (Obs.: não pode ser terminal leste pois é apenas desembarque, temos um campo especifico para isso)
 #   - hora_partida:               Pode ser do valor de um horário, tipo '8:25' ou 'N/A' caso não tenha valor
