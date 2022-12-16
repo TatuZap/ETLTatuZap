@@ -5,7 +5,7 @@ BUS_URL = "https://pu.ufabc.edu.br/horarios-dos-onibus"
 BUS_PAGE = requests.get(BUS_URL).content
 tables_on_page = pd.read_html(BUS_PAGE)
 
-# O Resultado desse método deve ser um dataframe único com 6 colunas:
+# O Resultado desse método deve ser um dataframe único com 7 colunas:
 #   - dias:                       Pode ser de dois valores 'SEMANA' e 'SABADO'
 #   - origem:                     Pode ser dos valores: 'SA' ou 'SBC' ou 'TERMINAL-SBC' (Obs.: não pode ser terminal leste pois é apenas desembarque, temos um campo especifico para isso)
 #   - destino:                    Pode ser dos valores: 'SA' ou 'SBC' ou 'TERMINAL-SBC' (Obs.: não pode ser terminal leste pois é apenas desembarque, temos um campo especifico para isso)
