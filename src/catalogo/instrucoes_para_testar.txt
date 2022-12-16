@@ -1,1 +1,0 @@
-- Rodar o comando `python3 -m src.catalogo.catalogo_model_test`

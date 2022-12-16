@@ -99,7 +99,7 @@ git clone git@github.com:TatuZap/ETLTatuZap.git
 - Rodar o comando `python3`
 - Rodar o comando `import src.turmas.turmas_model as turmas_model`
 - Rodar o comando `turmas_model.populate_database()` para raspar os dados e popular o banco
-- Rodar o comando `list(turmas_model.find_turmas_by_ra('11201810247'))` por exemplo
+- Rodar o comando `turmas_model.find_turmas_by_ra('11201810247')` por exemplo
 
 ### Funcionalidade de usuario
 
@@ -129,7 +129,7 @@ git clone git@github.com:TatuZap/ETLTatuZap.git
 
 ### Funcionalidade de turmas
 
-- Ainda não há testes para essa funcionalidade
+- Rodar o comando `python3 -m src.turmas.turmas_model_test`
 
 ### Funcionalidade de usuario
 

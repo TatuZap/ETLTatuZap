@@ -4,6 +4,20 @@ import src.turmas.turmas_pos_reajuste_raspador as turmas_pos_reajsute_raspador
 import src.turmas.turmas_pos_ajuste_raspador as turmas_pos_ajuste_raspador
 from ..database import get_db, DBCollections
 
+# função privada dentro desse módulo
+def _get_collection_SALAS_HORARIOS():
+    try:
+        return get_db.get_collection(DBCollections.TURMAS_SALAS_HORARIOS)
+    except Exception as e:
+        raise e
+
+# função privada dentro desse módulo
+def _get_collection_RA_TURMAS():
+    try:
+        return get_db.get_collection(DBCollections.RA_TURMAS)
+    except Exception as e:
+        raise e
+
 def insert_items_SALAS_HORARIOS(items):
     """
         Função que insere um documentos relacionados a turmas na coleção de turmas
@@ -69,26 +83,38 @@ def _get_collection_SALAS_HORARIOS():
         return get_db.get_collection(DBCollections.TURMAS_SALAS_HORARIOS)
     except Exception as e:
         raise e
-# função privada dentro desse módulo
-def _get_collection_RA_TURMAS():
+
+def find_materia_infos(codigo_materia: str):
     try:
-        return get_db.get_collection(DBCollections.RA_TURMAS)
+        return _get_collection_SALAS_HORARIOS().find_one({ 'TURMA': codigo_materia })
     except Exception as e:
         raise e
 
-def find_turmas_by_ra(ra : str, dia_semana=None) -> list:
+def find_codigos_turmas_by_ra(ra: str) -> list:
     try:
-        response = list(_get_collection_RA_TURMAS().find({"RA":ra}))
+        return list(_get_collection_RA_TURMAS().find({ "RA": ra }))
+    except Exception as e:
+        raise e
+
+def find_turmas_by_ra(ra: str, dia_semana=None) -> list:
+    try:
+        codigos_turmas = find_codigos_turmas_by_ra(ra)
+
         lista_disciplinas = []
-        for item in response:
+
+        for item in codigos_turmas:
             disciplina = {}
-            materia = list(_get_collection_SALAS_HORARIOS().find({'TURMA': str(item["TURMA"])}))[0]
+            materia = find_materia_infos(str(item["TURMA"]))
+
             disciplina["Disciplina"] = materia["Disciplina"]
             disciplina["horário_pratica"] = materia["prática"]
             disciplina["horário_teoria"] = materia["teoria"]
+
             lista_disciplinas.append(disciplina)
+
         if dia_semana:
             lista_disciplinas = [ disciplina for disciplina in lista_disciplinas if dia_semana in str(disciplina["horário_pratica"]) or dia_semana in str(disciplina["horário_teoria"]) ]
+
         return lista_disciplinas
     except Exception as e:
         raise e
